@@ -7,7 +7,7 @@
 
     
 
-    <title>Category: dotnet | Xavier的技術博客</title>
+    <title>Archives: 2024 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
     <meta name="description" content="" />
@@ -56,11 +56,11 @@
                 <span class="nav-text">首頁</span>
             </a>
         
-            <a class="nav-item active" href="/categories/dotnet">
+            <a class="nav-item" href="/categories/dotnet">
                 <span class="nav-text">DotNet</span>
             </a>
         
-            <a class="nav-item" href="/archives">
+            <a class="nav-item active" href="/archives">
                 <span class="nav-text">歸檔</span>
             </a>
         
@@ -119,92 +119,42 @@
         <div id="content" class="content">
             <div id="wrapper" class="wrapper" style="max-width: 800px">
                 
-    <article class="article" itemscope itemprop="blogPost">
+
+
     
-    <header class="article-header">
+    
+    
+    
+    
+    <section class="archives-wrap">
+    <div class="archive-year-wrap">
+    <a href="/archives/2024" class="page-hd">
+        2024
+    </a>
+    </div>
+    <ol class="archives">
+    
+
+    <li class="archive-section-item">
         
-        <h1 itemprop="name">
-            <a href="/2024/05/02/%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2%E9%96%8B%E7%99%BC%E6%A8%A1%E5%BC%8F/">前後端分離開發模式</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="http://example.com/categories/dotnet/index.html">
+<article class="archive-article archive-type-post">
+    <div class="archive-article-inner">
+        <header class="archive-article-header">
+            <a class="archive-article-link" href="/2024/05/02/%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2%E9%96%8B%E7%99%BC%E6%A8%A1%E5%BC%8F/">前後端分離開發模式</a>
+            <span class="archive-article-date">
+                (<a class="article-date" href="/archives/2024/05">
     
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-05-02T06:25:20.000Z" itemprop="datePublished">2024-05-02</time>
+    <time class="vm" datetime="2024-05-02T06:25:20.000Z" itemprop="datePublished">5/2</time>
 </a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/dotnet/" rel="tag">dotnet</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><font size="4.5">  MVC開發模式 : 前端code與後端code放置在同一個專案中(前端code與後端code運行在同一台server上)，前端開發人員負責撰寫視圖模板的前端code，後端開發人員負責撰寫控制器與模型的後端code，若後端多採用ViewData、ViewBag等動態、弱類型的資料傳遞工具來將資料傳遞到前端Template，則會造成前端與後端之間的高耦合性，且因為前端code與後端code運行在同一台server上，因此維運責任劃分較不清楚 </font></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2024/05/02/%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2%E9%96%8B%E7%99%BC%E6%A8%A1%E5%BC%8F/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
+)
+            </span>
+        </header>
+    </div>
 </article>
+    </li>
 
 
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/">EF Core - 有關批次插入、刪除、更新資料</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="http://example.com/categories/dotnet/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2023-06-22T11:54:54.000Z" itemprop="datePublished">2023-06-22</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/dotnet/" rel="tag">dotnet</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><p><font size="4.5">EF Core 7之前的版本，批次刪除、更新資料的方法是使用RemoveRange()、UpdateRange()，本質上是先查出多條記錄後，再對逐條記錄個別進行Delete、Update，對於大量資料而言，效率非常低</font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
+</ol></section>
 
 
 
