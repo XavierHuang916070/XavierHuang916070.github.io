@@ -7,10 +7,10 @@
 
     
 
-    <title>Archives: 2023/6 | Xavier的技術博客</title>
+    <title>快取基礎 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" 快取的基礎概念 1 - 快取(Cache)是做系統優化時簡單又有效的工具之一  2 - 快取的概念圖如下:   3 - 快取既能降低資料庫的壓力，又能提升Request-Response的速度 4 - 快取命中率越高越好  5 - 快取之資料與資料庫之資料可能會不一致  6 - 多級快取 - 瀏覽器、Gateway Server(網關Server、閘道Server)、Web Server、Database Server可能各自擁有快取，概念圖如下:" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -60,7 +60,7 @@
                 <span class="nav-text">DotNet</span>
             </a>
         
-            <a class="nav-item active" href="/archives">
+            <a class="nav-item" href="/archives">
                 <span class="nav-text">歸檔</span>
             </a>
         
@@ -76,6 +76,8 @@
     <div id="aside-inner" class="aside-inner">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="https://xavierhuang916070.github.io"></form>
 
+        
+        
         
         
 
@@ -118,50 +120,84 @@
 
         <div id="content" class="content">
             <div id="wrapper" class="wrapper" style="max-width: 800px">
-                
-
-
+                <article class="article" itemscope itemprop="blogPost">
     
-    
-    
-    
-    
-    <section class="archives-wrap">
-    <div class="archive-year-wrap">
-    <a href="/archives/2023/06" class="page-hd">
-        2023/06
-    </a>
-    </div>
-    <ol class="archives">
-    
-
-    <li class="archive-section-item">
+    <header class="article-header">
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/">EF Core - 有關批次插入、刪除、更新資料</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2023/06">
+        <h1 itemprop="name">
+            快取基礎
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/index.html">
     
-    <time class="vm" datetime="2023-06-22T11:54:54.000Z" itemprop="datePublished">6/22</time>
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-05-20T05:07:52.000Z" itemprop="datePublished">2024-05-20</time>
 </a>
-)
-            </span>
-        </header>
-    </div>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/dotnet/" rel="tag">dotnet</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><font size="4.5"> 快取的基礎概念</font></li>
+<li><font size="4.5"> 1 - 快取(Cache)是做系統優化時簡單又有效的工具之一 </font></li>
+<li><font size="4.5"> 2 - 快取的概念圖如下: </font> <span id="more"></span></li>
+</ul>
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%961.png" class>
+
+<ul>
+<li><font size="4.5"> 3 - 快取既能降低資料庫的壓力，又能提升Request-Response的速度</font></li>
+<li><font size="4.5"> 4 - 快取命中率越高越好 </font></li>
+<li><font size="4.5"> 5 - 快取之資料與資料庫之資料可能會不一致 </font></li>
+<li><font size="4.5"> 6 - 多級快取 - 瀏覽器、Gateway Server(網關Server、閘道Server)、Web Server、Database Server可能各自擁有快取，概念圖如下:</font></li>
+<li><img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%962.png" class></li>
+</ul>
+
+        
+    </section>
 </article>
-    </li>
 
 
-</ol></section>
 
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "e4595268775ea0e0f9be",
+        clientSecret: "d99617dde26729e9efaea586c23e0b1a702faec7",
+        repo: "XavierHuang916070.github.io",
+        owner: "XavierHuang916070",
+        admin: ["XavierHuang916070"],
+        id: "72cf0195332d5c970341bfcedcd1989a",
+        distractionFreeMode: true,
+        title: "快取基礎",
+        body: "https://xavierhuang916070.github.io/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/",
+        labels: ["dotnet"]
+    }).render('comments');
+    </script>
+</div>
 
 
 
             </div>
         </div>
 
+        
+            
+            <a id="pagenext" href="/2024/05/04/AspDotNetCore%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-next" title="Asp.Net Core依賴注入的使用"><i class="icon-arrow-right"></i></a>
+            
+            
         
 
         <footer class="footer">
@@ -225,6 +261,33 @@
         });
     });
     </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
     
 
 </body>
