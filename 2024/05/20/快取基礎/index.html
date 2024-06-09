@@ -10,7 +10,7 @@
     <title>快取基礎 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content=" 快取的基礎概念 1 - 快取(Cache)是做系統優化時簡單又有效的工具之一  2 - 快取的概念圖如下:   3 - 快取既能降低資料庫的壓力，又能提升Request-Response的速度 4 - 快取命中率越高越好  5 - 快取之資料與資料庫之資料可能會不一致  6 - 多級快取 - 瀏覽器、Gateway Server(網關Server、閘道Server)、Web Server、Database Server可能各自擁有快取，概念圖如下:" />
+    <meta name="description" content=" 快取的基礎概念 1 - 快取(Cache)是做系統優化時簡單又有效的工具之一  2 - 快取的概念圖如下:   3 - 快取既能降低資料庫的壓力，又能提升Request-Response的速度 4 - 快取命中率越高越好  5 - 快取之資料與資料庫之資料可能會不一致  6 - 多級快取 - 瀏覽器、Gateway Server(網關Server、閘道Server)、Web Server、Database Server可能各自擁有快取，概念圖如下:  catch-control  1 - RF" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -160,8 +160,33 @@
 <li><font size="4.5"> 4 - 快取命中率越高越好 </font></li>
 <li><font size="4.5"> 5 - 快取之資料與資料庫之資料可能會不一致 </font></li>
 <li><font size="4.5"> 6 - 多級快取 - 瀏覽器、Gateway Server(網關Server、閘道Server)、Web Server、Database Server可能各自擁有快取，概念圖如下:</font></li>
-<li><img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%962.png" class></li>
 </ul>
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%962.png" class>
+
+<hr>
+<ul>
+<li><p><font size="4.5">  catch-control </font></p>
+</li>
+<li><p><font size="4.5"> 1 - RFC7324為HTTP協議中關於快取控制的規範，其中最重要的部分為響應報文頭中的cache-control，例如:若伺服器返回的響應報文頭包含了cache-control:max-age-60，則表示伺服器告知瀏覽器”由瀏覽器端設置緩存，並保存此響應60秒”  </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 我們只要給需進行快取控制的控制器的action方法添加ResponseCache這個特性，Asp.Net Core就會自動在響應報文頭中添加cache-control </font></p>
+</li>
+<li><p><font size="4.5"> 3 - 試驗:撰寫一個返回當前時間的action方法，並加上ResponseCache特性 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _7_<span class="title">Asp.Net_Core.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/[controller]/[action]&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">ResponseCache(Duration = 20)</span>]</span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> DateTime <span class="title">Now</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> DateTime.Now;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%963.png" class>
+
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%964.png" class>
+
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%965.png" class>
+
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%966.png" class>
+
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%967.png" class>
+
+<img src="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/%E5%BF%AB%E5%8F%968.png" class>
 
         
     </section>
