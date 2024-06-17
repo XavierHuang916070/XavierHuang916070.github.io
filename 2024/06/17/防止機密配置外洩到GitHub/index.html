@@ -10,7 +10,7 @@
     <title>防止機密配置外洩到GitHub | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" 防止機密配置外洩到GitHub  User Secrets   1 - 將不方便放在appsettings.json文件中的機密配置，改放在專案的secrets.json文件中  2 - 在Asp.Net Core專案上點擊鼠標右鍵，選擇”管理使用者密碼”  3 - secrets.json文件並非放在專案根目錄中，而是放在本地用戶端磁碟上的某路徑，因此專案上傳到GitHub後，機密配置不會外洩到GitHub，如下所示:  4 - 讀取secrets.json Example1  5 - 讀取" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -145,17 +145,66 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-06-17T03:31:07.000Z" itemprop="datePublished">2024-06-17</time>
+    <time class="vm" datetime="2024-06-17T08:10:49.000Z" itemprop="datePublished">2024-06-17</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> 防止機密配置外洩到GitHub </font></p>
+</li>
+<li><p><font size="4.5"> User Secrets </font> <span id="more"></span></p>
+</li>
+<li><p><font size="4.5"> 1 - 將不方便放在appsettings.json文件中的機密配置，改放在專案的secrets.json文件中 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 在Asp.Net Core專案上點擊鼠標右鍵，選擇”管理使用者密碼” </font></p>
+</li>
+<li><p><font size="4.5"> 3 - secrets.json文件並非放在專案根目錄中，而是放在本地用戶端磁碟上的某路徑，因此專案上傳到GitHub後，機密配置不會外洩到GitHub，如下所示: </font></p>
+</li>
+</ul>
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A91.png" class>
+
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A92.png" class>
+
+<ul>
+<li><font size="4.5"> 4 - 讀取secrets.json Example1 </font></li>
+</ul>
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A93.png" class>
+
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A94.png" class>
+
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A95.png" class>
+
+<ul>
+<li><font size="4.5"> 5 - 讀取secrets.json Example2 </font></li>
+</ul>
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A96.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Options;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _10_<span class="title">Asp.Net_Core.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/[controller]/[action]&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IConfiguration _configuration;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TestController</span>(<span class="params">IConfiguration configuration</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._configuration = configuration;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GetSecretsConnStr</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>._configuration.GetSection(<span class="string">&quot;connStr&quot;</span>).Value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A97.png" class>
+
+<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A98.png" class>
+
+<ul>
+<li><p><font size="4.5"> Ps: Ps: User Secrets只適合用於開發環境供開發人員使用，不適合用於生產環境 </font></p>
+</li>
+<li><p><font size="4.5"> Ps: User Secrets中的機密配置仍然是明文，若不想讓別人直接看到機密配置之明文訊息，請使用中心化配置伺服器來存放機密配置(例如: 採用Azure Key Vault(雲平台配置提供者) )，但中心化配置伺服器仍然無法完全確保機密配置的安全，還必須進一步配合安全防護、監控機制才可更有效確保機密配置的安全</font></p>
+</li>
+<li><p><font size="4.5"> Ps: 若因為重裝系統等原因而造成專案於開發環境中的User Secrets需重建，則需重新進行配置，較為麻煩，此為User Secrets的缺點，可改用中心化配置伺服器來解決此問題 </font></p>
+</li>
+</ul>
+
         
     </section>
 </article>
@@ -176,7 +225,7 @@
         distractionFreeMode: true,
         title: "防止機密配置外洩到GitHub",
         body: "https://xavierhuang916070.github.io/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/",
-        labels: []
+        labels: ["aspdotnetcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +237,8 @@
 
         
             
-            <a id="pagenext" href="/2024/06/16/%E5%BF%AB%E5%8F%96%E9%9B%AA%E5%B4%A9/" class="article-next" title="快取雪崩"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/06/17/AspDotNetCore%E8%88%87%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%95%B4%E5%90%88/" class="article-next" title="Asp.Net Core與配置系統的整合"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/06/17/%E5%88%86%E5%B1%A4%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8EFCore/" class="article-prev" title="分層專案中使用EF Core"><i class="icon-arrow-left"></i></a>
             
         
 
