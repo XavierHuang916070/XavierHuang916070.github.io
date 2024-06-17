@@ -10,7 +10,7 @@
     <title>中間件類 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" 中間件類  1 - 若中間件的程式碼較複雜或需要重複使用一個中間件，最好將中間件的程式碼放到一個單獨的中間件類中   2 - 中間件類為一個普通的.Net類，它不需要繼承任何父類，也不需要實現任何介面，但中間件類需要有一個構造方法，此構造方法中至少需要有一個RequestDelegate類型的參數，此參數可用來指向下一個中間件  3 - 中間件類中需要定義一個名為Invoke或InvokeAsync的方法，此方法中至少需要有一個HttpContext類型的參數，此方法的返回值類型必須為Task" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -145,17 +145,89 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-06-17T10:11:14.000Z" itemprop="datePublished">2024-06-17</time>
+    <time class="vm" datetime="2024-06-17T15:34:50.000Z" itemprop="datePublished">2024-06-17</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> 中間件類 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 若中間件的程式碼較複雜或需要重複使用一個中間件，最好將中間件的程式碼放到一個單獨的中間件類中 </font> <span id="more"></span></p>
+</li>
+<li><p><font size="4.5"> 2 - 中間件類為一個普通的.Net類，它不需要繼承任何父類，也不需要實現任何介面，但中間件類需要有一個構造方法，此構造方法中至少需要有一個RequestDelegate類型的參數，此參數可用來指向下一個中間件 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - 中間件類中需要定義一個名為Invoke或InvokeAsync的方法，此方法中至少需要有一個HttpContext類型的參數，此方法的返回值類型必須為Task類型 </font></p>
+</li>
+<li><p><font size="4.5"> 4 - 中間件類的構造方法與Invoke() &#x2F; InvokeAsync()還可定義其他參數，而其他參數的值需要透過依賴注入來賦予 </font></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><font size="4.5"> 試驗: </font></li>
+</ul>
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E1.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E2.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> _20_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestMiddleWare</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> RequestDelegate _next;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TestMiddleWare</span>(<span class="params">RequestDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">InvokeAsync</span>(<span class="params">HttpContext context</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            context.Response.ContentType = <span class="string">&quot;text/html&quot;</span>; </span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare Start&lt;br/&gt;&quot;</span>);</span><br><span class="line">            <span class="keyword">await</span> <span class="keyword">this</span>._next.Invoke(context);</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare End&lt;br/&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E3.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E4.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> _20_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestMiddleWare2</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> RequestDelegate _next;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TestMiddleWare2</span>(<span class="params">RequestDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">InvokeAsync</span>(<span class="params">HttpContext context</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare2 Start&lt;br/&gt;&quot;</span>);</span><br><span class="line">            <span class="keyword">await</span> <span class="keyword">this</span>._next.Invoke(context);</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare2 End&lt;br/&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> _20_Asp.Net_Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line">app.Map(<span class="string">&quot;/test&quot;</span>, <span class="keyword">async</span> (pipelineBuilder) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    pipelineBuilder.UseMiddleware&lt;TestMiddleWare&gt;();</span><br><span class="line">    pipelineBuilder.UseMiddleware&lt;TestMiddleWare2&gt;();</span><br><span class="line">    pipelineBuilder.Run(<span class="keyword">async</span> (context) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;Run&lt;br/&gt;&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E5.png" class>
+
+<hr>
+<ul>
+<li><font size="4.5"> 試驗: 檢查請求中是否帶有password&#x3D;123之QueryString，若帶有此Query String，則會檢查請求報文體是否是以Json格式傳輸過來，若是以Json格式傳輸過來，則會將其解析為dynamic類型的Object，並將此dynamic類型的Object放到context.Items中以供後續的中間件或Run使用 </font></li>
+</ul>
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E6.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E7.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E8.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Dynamic.Json;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _20_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CheckMiddleWare</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> RequestDelegate _next;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">CheckMiddleWare</span>(<span class="params">RequestDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">InvokeAsync</span>(<span class="params">HttpContext context</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> pwd = context.Request.Query[<span class="string">&quot;password&quot;</span>];</span><br><span class="line">            <span class="keyword">if</span> (pwd == <span class="number">123</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (context.Request.HasJsonContentType())</span><br><span class="line">                &#123;</span><br><span class="line">                    Stream? reqStream = context.Request.BodyReader.AsStream();</span><br><span class="line">                    <span class="built_in">dynamic</span>? jsonObj = DJson.Parse(reqStream);</span><br><span class="line">                    context.Items[<span class="string">&quot;BodyJson&quot;</span>] = jsonObj;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">await</span> _next(context);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                context.Response.StatusCode = <span class="number">401</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> _20_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestMiddleWare</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> RequestDelegate _next;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TestMiddleWare</span>(<span class="params">RequestDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">InvokeAsync</span>(<span class="params">HttpContext context</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            context.Response.ContentType = <span class="string">&quot;text/html&quot;</span>; </span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare Start&lt;br/&gt;&quot;</span>);</span><br><span class="line">            <span class="keyword">await</span> <span class="keyword">this</span>._next.Invoke(context);</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare End&lt;br/&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> _20_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestMiddleWare2</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> RequestDelegate _next;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TestMiddleWare2</span>(<span class="params">RequestDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">InvokeAsync</span>(<span class="params">HttpContext context</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare2 Start&lt;br/&gt;&quot;</span>);</span><br><span class="line">            <span class="keyword">await</span> <span class="keyword">this</span>._next.Invoke(context);</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;TestMiddleWare2 End&lt;br/&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> _20_Asp.Net_Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line">app.Map(<span class="string">&quot;/test&quot;</span>, <span class="keyword">async</span> (pipelineBuilder) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    pipelineBuilder.UseMiddleware&lt;CheckMiddleWare&gt;();</span><br><span class="line">    pipelineBuilder.UseMiddleware&lt;TestMiddleWare&gt;();</span><br><span class="line">    pipelineBuilder.UseMiddleware&lt;TestMiddleWare2&gt;();</span><br><span class="line">    pipelineBuilder.Run(<span class="keyword">async</span> (context) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;Run&lt;br/&gt;&quot;</span>);</span><br><span class="line">        <span class="built_in">dynamic</span>? obj = context.Items[<span class="string">&quot;BodyJson&quot;</span>];</span><br><span class="line">        <span class="keyword">if</span> (obj != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">$&quot;<span class="subst">&#123;obj&#125;</span>&lt;br/&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E9.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E10.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E11.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E12.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E13.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E14.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E15.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E16.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E17.png" class>
+
         
     </section>
 </article>
@@ -176,7 +248,7 @@
         distractionFreeMode: true,
         title: "中間件類",
         body: "https://xavierhuang916070.github.io/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/",
-        labels: []
+        labels: ["aspdotnetcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +260,8 @@
 
         
             
-            <a id="pagenext" href="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/" class="article-next" title="防止機密配置外洩到GitHub"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/" class="article-next" title="中間件"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/06/17/Markdown%E8%BD%89%E6%8F%9B%E5%99%A8%E4%B8%AD%E9%96%93%E4%BB%B6/" class="article-prev" title="Markdown轉換器中間件"><i class="icon-arrow-left"></i></a>
             
         
 
