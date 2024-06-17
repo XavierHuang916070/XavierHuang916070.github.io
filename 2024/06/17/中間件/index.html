@@ -7,10 +7,10 @@
 
     
 
-    <title>防止機密配置外洩到GitHub | Xavier的技術博客</title>
+    <title>中間件 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content=" 防止機密配置外洩到GitHub  User Secrets   1 - 將不方便放在appsettings.json文件中的機密配置，改放在專案的secrets.json文件中  2 - 在Asp.Net Core專案上點擊鼠標右鍵，選擇”管理使用者密碼”  3 - secrets.json文件並非放在專案根目錄中，而是放在本地用戶端磁碟上的某路徑，因此專案上傳到GitHub後，機密配置不會外洩到GitHub，如下所示:  4 - 讀取secrets.json Example1  5 - 讀取" />
+    <meta name="description" content=" 何為中間件  1 - 中間件為.Net中的組件，而Asp.Net Core MVC框架、Asp.Net Core Web Api框架、快取中間件、身分驗證框架、CORS、Swagger等都是Asp.Net Core內置的中間件   2 - 中間件由前邏輯、next()、後邏輯所組成，前邏輯為請求過程中各個中間件所執行的邏輯代碼，next()可用來指向下一個中間件的呼叫，後邏輯為響應過程中各個中間件所執行的邏輯代碼，若有多個中間件，則前邏輯與後邏輯的執行順序是相反的  管道與中間件、Map &amp;#" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,15 +137,15 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            防止機密配置外洩到GitHub
+            中間件
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/index.html">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/index.html">
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-06-17T08:10:49.000Z" itemprop="datePublished">2024-06-17</time>
+    <time class="vm" datetime="2024-06-17T14:58:46.000Z" itemprop="datePublished">2024-06-17</time>
 </a>
 
             
@@ -161,49 +161,53 @@
     <section class="article-body markdown-body">
         
         <ul>
-<li><p><font size="4.5"> 防止機密配置外洩到GitHub </font></p>
+<li><p><font size="4.5"> 何為中間件 </font></p>
 </li>
-<li><p><font size="4.5"> User Secrets </font> <span id="more"></span></p>
-</li>
-<li><p><font size="4.5"> 1 - 將不方便放在appsettings.json文件中的機密配置，改放在專案的secrets.json文件中 </font></p>
-</li>
-<li><p><font size="4.5"> 2 - 在Asp.Net Core專案上點擊鼠標右鍵，選擇”管理使用者密碼” </font></p>
-</li>
-<li><p><font size="4.5"> 3 - secrets.json文件並非放在專案根目錄中，而是放在本地用戶端磁碟上的某路徑，因此專案上傳到GitHub後，機密配置不會外洩到GitHub，如下所示: </font></p>
+<li><p><font size="4.5"> 1 - 中間件為.Net中的組件，而Asp.Net Core MVC框架、Asp.Net Core Web Api框架、快取中間件、身分驗證框架、CORS、Swagger等都是Asp.Net Core內置的中間件 </font> <span id="more"></span></p>
 </li>
 </ul>
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A91.png" class>
-
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A92.png" class>
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B61.png" class>
 
 <ul>
-<li><font size="4.5"> 4 - 讀取secrets.json Example1 </font></li>
+<li><font size="4.5"> 2 - 中間件由前邏輯、next()、後邏輯所組成，前邏輯為請求過程中各個中間件所執行的邏輯代碼，next()可用來指向下一個中間件的呼叫，後邏輯為響應過程中各個中間件所執行的邏輯代碼，若有多個中間件，則前邏輯與後邏輯的執行順序是相反的 </font></li>
 </ul>
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A93.png" class>
-
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A94.png" class>
-
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A95.png" class>
-
+<hr>
 <ul>
-<li><font size="4.5"> 5 - 讀取secrets.json Example2 </font></li>
+<li><p><font size="4.5"> 管道與中間件、Map &#x2F; Use &#x2F; Run的概念 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - Map可用來將指定的請求引入管道中進行流轉 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 一個管道由若干個Use與一個Run所組成，每個Use對應一個中間件，而Run可用來執行請求過程中管道的最終核心應用邏輯 </font></p>
+</li>
 </ul>
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A96.png" class>
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B62.png" class>
 
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Options;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _10_<span class="title">Asp.Net_Core.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/[controller]/[action]&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IConfiguration _configuration;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TestController</span>(<span class="params">IConfiguration configuration</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._configuration = configuration;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GetSecretsConnStr</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>._configuration.GetSection(<span class="string">&quot;connStr&quot;</span>).Value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A97.png" class>
-
-<img src="/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/%E9%98%B2%E6%AD%A2%E5%A4%96%E6%B4%A98.png" class>
-
+<hr>
 <ul>
-<li><p><font size="4.5"> Ps: Ps: User Secrets只適合用於開發環境供開發人員使用，不適合用於生產環境 </font></p>
+<li><p><font size="4.5"> 自定義的中間件 </font></p>
 </li>
-<li><p><font size="4.5"> Ps: User Secrets中的機密配置仍然是明文，若不想讓別人直接看到機密配置之明文訊息，請使用中心化配置伺服器來存放機密配置(例如: 採用Azure Key Vault(雲平台配置提供者) )，但中心化配置伺服器仍然無法完全確保機密配置的安全，還必須進一步配合安全防護、監控機制才可更有效確保機密配置的安全</font></p>
-</li>
-<li><p><font size="4.5"> Ps: 若因為重裝系統等原因而造成專案於開發環境中的User Secrets需重建，則需重新進行配置，較為麻煩，此為User Secrets的缺點，可改用中心化配置伺服器來解決此問題 </font></p>
+<li><p><font size="4.5"> 為了更清楚地理解中間件，請創建一個空的Asp.Net Core專案，並手動添加自定義的中間件 </font></p>
 </li>
 </ul>
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B63.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B64.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B65.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B66.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B67.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line">app.MapGet(<span class="string">&quot;/&quot;</span>, () =&gt; <span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">app.MapGet(<span class="string">&quot;/test&quot;</span>, () =&gt; <span class="string">&quot;Xavier Huang&quot;</span>);</span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B68.png" class>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B69.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.VisualBasic.CompilerServices;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line">app.Map(<span class="string">&quot;/test&quot;</span>, <span class="keyword">async</span> (pipelineBuilder) =&gt; </span><br><span class="line">&#123;</span><br><span class="line">    pipelineBuilder.Use(<span class="keyword">async</span> (context, next) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        context.Response.ContentType = <span class="string">&quot;text/html&quot;</span>;</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;1 start&lt;br/&gt;&quot;</span>);</span><br><span class="line">        <span class="keyword">await</span> next.Invoke();</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;1 end&lt;br/&gt;&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    pipelineBuilder.Use(<span class="keyword">async</span> (context, next) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;2 start&lt;br/&gt;&quot;</span>);</span><br><span class="line">        <span class="keyword">await</span> next.Invoke();</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;2 end&lt;br/&gt;&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    pipelineBuilder.Run(<span class="keyword">async</span> (context) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;Run&lt;br/&gt;&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/%E4%B8%AD%E9%96%93%E4%BB%B610.png" class>
 
         
     </section>
@@ -221,10 +225,10 @@
         repo: "XavierHuang916070.github.io",
         owner: "XavierHuang916070",
         admin: ["XavierHuang916070"],
-        id: "585788208c1c32c3883b665eb5e39e62",
+        id: "4c0b76ca6aec7dea2941fbc4c63c4823",
         distractionFreeMode: true,
-        title: "防止機密配置外洩到GitHub",
-        body: "https://xavierhuang916070.github.io/2024/06/17/%E9%98%B2%E6%AD%A2%E6%A9%9F%E5%AF%86%E9%85%8D%E7%BD%AE%E5%A4%96%E6%B4%A9%E5%88%B0GitHub/",
+        title: "中間件",
+        body: "https://xavierhuang916070.github.io/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6/",
         labels: ["aspdotnetcore"]
     }).render('comments');
     </script>
@@ -237,10 +241,8 @@
 
         
             
-            <a id="pagenext" href="/2024/06/17/AspDotNetCore%E8%88%87%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%95%B4%E5%90%88/" class="article-next" title="Asp.Net Core與配置系統的整合"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/" class="article-next" title="對請求進行限流的Action Filter"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/06/17/%E4%B8%AD%E9%96%93%E4%BB%B6%E9%A1%9E/" class="article-prev" title="中間件類"><i class="icon-arrow-left"></i></a>
             
         
 
