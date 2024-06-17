@@ -7,10 +7,10 @@
 
     
 
-    <title>ActionFilter | Xavier的技術博客</title>
+    <title>Action Filter | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" Action Filter  1 - 當控制器的Action方法被執行之前、控制器的Action方法被執行完畢之後，系統會自動執行Action Filter  2 - 多個Action Filter的鏈式執行  3 - 試驗: 12345678910111213141516using Microsoft.AspNetCore.Http;using Microsoft.AspNetCore.Mvc;namespace _16_Asp.Net_Core.Controllers&amp;#123;    [" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,7 +137,7 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            ActionFilter
+            Action Filter
         </h1>
         
         <div class="article-meta clearfix">
@@ -145,17 +145,89 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-06-17T05:55:39.000Z" itemprop="datePublished">2024-06-17</time>
+    <time class="vm" datetime="2024-06-17T12:28:56.000Z" itemprop="datePublished">2024-06-17</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> Action Filter </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 當控制器的Action方法被執行之前、控制器的Action方法被執行完畢之後，系統會自動執行Action Filter </font><span id="more"></span></p>
+</li>
+<li><p><font size="4.5"> 2 - 多個Action Filter的鏈式執行 </font></p>
+</li>
+</ul>
+<img src="/2024/06/17/ActionFilter/ActionFilter1.png" class>
+
+<ul>
+<li><font size="4.5"> 3 - 試驗: </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">Asp.Net_Core.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/[controller]/[action]&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GetHelloWorldString</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello World !!!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter2.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc.Filters;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyActionFilter</span> : <span class="title">IAsyncActionFilter</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">OnActionExecutionAsync</span>(<span class="params">ActionExecutingContext context, ActionExecutionDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;MyActionFilter : 1st Part開始執行&quot;</span>);</span><br><span class="line">            ActionExecutedContext r = <span class="keyword">await</span> next();</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;MyActionFilter : 2st Part開始執行&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (r.Exception != <span class="literal">null</span>)</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;MyActionFilter : 2st Part執行失敗&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                Console.WriteLine(<span class="string">&quot;MyActionFilter : 2st Part執行成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter3.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter4.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter5.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter6.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter7.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter8.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter9.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter10.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter11.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter12.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter13.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter14.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter15.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter16.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter17.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter18.png" class>
+
+<ul>
+<li><font size="4.5"> 4 - 試驗: </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">Asp.Net_Core.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/[controller]/[action]&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GetHelloWorldString</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;控制器的GetHelloWorldString()開始執行&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello World !!!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc.Filters;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyActionFilter</span> : <span class="title">IAsyncActionFilter</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">OnActionExecutionAsync</span>(<span class="params">ActionExecutingContext context, ActionExecutionDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;MyActionFilter : 1st Part開始執行&quot;</span>);</span><br><span class="line">            ActionExecutedContext r = <span class="keyword">await</span> next();</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;MyActionFilter : 2st Part開始執行&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (r.Exception != <span class="literal">null</span>)</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;MyActionFilter : 2st Part執行失敗&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                Console.WriteLine(<span class="string">&quot;MyActionFilter : 2st Part執行成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc.Filters;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyActionFilter2</span> : <span class="title">IAsyncActionFilter</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">OnActionExecutionAsync</span>(<span class="params">ActionExecutingContext context, ActionExecutionDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;MyActionFilter2 : 1st Part開始執行&quot;</span>);</span><br><span class="line">            ActionExecutedContext r = <span class="keyword">await</span> next();</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;MyActionFilter2 : 2st Part開始執行&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (r.Exception != <span class="literal">null</span>)</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;MyActionFilter2 : 2st Part執行失敗&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                Console.WriteLine(<span class="string">&quot;MyActionFilter2 : 2st Part執行成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter19.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter20.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter21.png" class>
+
+<img src="/2024/06/17/ActionFilter/ActionFilter22.png" class>
+
         
     </section>
 </article>
@@ -174,9 +246,9 @@
         admin: ["XavierHuang916070"],
         id: "ceb2dcbad3361ac747f34658911a2ba1",
         distractionFreeMode: true,
-        title: "ActionFilter",
+        title: "Action Filter",
         body: "https://xavierhuang916070.github.io/2024/06/17/ActionFilter/",
-        labels: []
+        labels: ["aspdotnetcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +260,8 @@
 
         
             
-            <a id="pagenext" href="/2024/06/16/%E5%BF%AB%E5%8F%96%E9%9B%AA%E5%B4%A9/" class="article-next" title="快取雪崩"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/06/17/ExceptionFilter/" class="article-next" title="Exception Filter"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/06/17/AspDotNetCore%E8%88%87%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%95%B4%E5%90%88/" class="article-prev" title="Asp.Net Core與配置系統的整合"><i class="icon-arrow-left"></i></a>
             
         
 
