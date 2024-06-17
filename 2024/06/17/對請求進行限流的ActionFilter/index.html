@@ -7,10 +7,10 @@
 
     
 
-    <title>對請求進行限流的ActionFilter | Xavier的技術博客</title>
+    <title>對請求進行限流的Action Filter | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" 對請求進行限流的Action Filter  案例需求 - 為了避免惡意用戶頻繁發送大量請求以消耗伺服器資源，請使用Action Filter實現”同一個IP地址最多只允許其一秒內發送一個請求”   試驗: 12345678910111213141516171819202122232425262728293031323334using Microsoft.AspNetCore.Mvc;using Microsoft.AspNetCore.Mvc.Filters;using Microsoft." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,7 +137,7 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            對請求進行限流的ActionFilter
+            對請求進行限流的Action Filter
         </h1>
         
         <div class="article-meta clearfix">
@@ -145,17 +145,51 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-06-17T06:33:40.000Z" itemprop="datePublished">2024-06-17</time>
+    <time class="vm" datetime="2024-06-17T14:35:08.000Z" itemprop="datePublished">2024-06-17</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> 對請求進行限流的Action Filter </font></p>
+</li>
+<li><p><font size="4.5"> 案例需求 - 為了避免惡意用戶頻繁發送大量請求以消耗伺服器資源，請使用Action Filter實現”同一個IP地址最多只允許其一秒內發送一個請求” </font> <span id="more"></span></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><font size="4.5"> 試驗: </font></li>
+</ul>
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%811.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc.Filters;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Caching.Memory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _18_<span class="title">Asp.Net_Core</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RateLimitFilter</span> : <span class="title">IAsyncActionFilter</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IMemoryCache _memoryCache;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">RateLimitFilter</span>(<span class="params">IMemoryCache memoryCache</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>._memoryCache = memoryCache;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">OnActionExecutionAsync</span>(<span class="params">ActionExecutingContext context, ActionExecutionDelegate next</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> remoteIP = context.HttpContext.Connection.RemoteIpAddress.ToString();</span><br><span class="line">            <span class="built_in">string</span> cacheKey = <span class="string">$&quot;LastVisitTick_<span class="subst">&#123;remoteIP&#125;</span>&quot;</span>;</span><br><span class="line">            <span class="built_in">long</span>? lastVisitValue = <span class="keyword">this</span>._memoryCache.Get&lt;<span class="built_in">long</span>?&gt;(cacheKey);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (lastVisitValue == <span class="literal">null</span> || Environment.TickCount64 - lastVisitValue &gt; <span class="number">1000</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">this</span>._memoryCache.Set(cacheKey, Environment.TickCount64, TimeSpan.FromSeconds(<span class="number">10</span>));</span><br><span class="line">                <span class="keyword">await</span> next();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                ObjectResult objResult = <span class="keyword">new</span> ObjectResult(<span class="string">&quot;訪問太頻繁了 !!!&quot;</span>) &#123; StatusCode = <span class="number">429</span> &#125;;</span><br><span class="line">                context.Result = objResult;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> _18_Asp.Net_Core;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add services to the container.</span></span><br><span class="line"></span><br><span class="line">builder.Services.AddControllers();</span><br><span class="line"><span class="comment">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span></span><br><span class="line">builder.Services.AddEndpointsApiExplorer();</span><br><span class="line">builder.Services.AddSwaggerGen();</span><br><span class="line">builder.Services.AddMemoryCache();</span><br><span class="line">builder.Services.Configure&lt;MvcOptions&gt;(opt =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    opt.Filters.Add&lt;RateLimitFilter&gt;();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Configure the HTTP request pipeline.</span></span><br><span class="line"><span class="keyword">if</span> (app.Environment.IsDevelopment())</span><br><span class="line">&#123;</span><br><span class="line">    app.UseSwagger();</span><br><span class="line">    app.UseSwaggerUI();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.UseHttpsRedirection();</span><br><span class="line"></span><br><span class="line">app.UseAuthorization();</span><br><span class="line"></span><br><span class="line">app.MapControllers();</span><br><span class="line"></span><br><span class="line">app.Run();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Http;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _18_<span class="title">Asp.Net_Core.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/[controller]/[action]&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GetHelloWorldString</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello World !!!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%812.png" class>
+
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%813.png" class>
+
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%814.png" class>
+
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%815.png" class>
+
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%816.png" class>
+
+<img src="/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/%E9%99%90%E6%B5%817.png" class>
+
         
     </section>
 </article>
@@ -174,9 +208,9 @@
         admin: ["XavierHuang916070"],
         id: "abe2c1a4f54993e9a6d40356c8c56f98",
         distractionFreeMode: true,
-        title: "對請求進行限流的ActionFilter",
+        title: "對請求進行限流的Action Filter",
         body: "https://xavierhuang916070.github.io/2024/06/17/%E5%B0%8D%E8%AB%8B%E6%B1%82%E9%80%B2%E8%A1%8C%E9%99%90%E6%B5%81%E7%9A%84ActionFilter/",
-        labels: []
+        labels: ["aspdotnetcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +222,8 @@
 
         
             
-            <a id="pagenext" href="/2024/06/16/%E5%BF%AB%E5%8F%96%E9%9B%AA%E5%B4%A9/" class="article-next" title="快取雪崩"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/06/17/%E8%87%AA%E5%8B%95%E5%95%9F%E7%94%A8%E4%BA%8B%E5%8B%99%E7%9A%84ActionFilter/" class="article-next" title="自動啟用事務的Action Filter"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/06/17/AspDotNetCore%E8%88%87%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%95%B4%E5%90%88/" class="article-prev" title="Asp.Net Core與配置系統的整合"><i class="icon-arrow-left"></i></a>
             
         
 
