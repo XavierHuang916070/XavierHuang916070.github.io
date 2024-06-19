@@ -136,6 +136,79 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2024/06/19/%E6%8E%A2%E8%A8%8E%E6%8F%90%E5%89%8D%E6%92%A4%E5%9B%9EJWT%E7%9A%84%E8%AD%B0%E9%A1%8C/">探討提前撤回JWT的議題</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-06-19T11:56:32.000Z" itemprop="datePublished">2024-06-19</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> 探討提前撤回JWT的議題 </font></p>
+</li>
+<li><p><font size="4.5"> JWT的缺點 - 由於伺服器端在簽發JWT並返回給用戶端後，服務器端並沒有存放JWT狀態的會話資料，因此在JWT到期之前，伺服器端無法提前撤回JWT </font></p>
+</li>
+<li><p><font size="4.5"> Ps: Session到期之前，伺服器端很容易就能提前撤回Session </font></p>
+</li>
+<li><p><font size="4.5"> 用戶禁用、用戶刪除、Token被盜用、單設備登入等情況下，可能會需要提前撤回JWT </font></p>
+</li>
+<li><p><font size="4.5"> Ps: 單設備登入: 一個用户只能在一個設備上登入系統，若一個用戶在設備A上登入系統後，又在設備B上登入系統，則系統只允許此用戶在設備A或設備B的其中一個設備上登入系統 </font></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><font size="4.5">若確實需要提前撤回JWT，可考慮採用下列策略: </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 使用Redis保存JWT狀態 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 使用Refresh Token + Access Token機制 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - JWT版本控制策略(此節所採用的方式): 在資料庫中的用戶表中增加一個整數類型的JWTVersion，表示最後一次簽發的JWT版本號。當伺服器端接收到用戶端所提交的JWT之後，伺服器端會將JWT Payload中的JWTVersion與資料庫中的用戶表中的JWTVersion進行比較，若JWT Payload中的JWTVersion小於資料庫中的用戶表中的JWTVersion，則表示JWT已過期或已禁用，以實現提前撤回JWT。伺服器端在簽發JWT時會將JWTVersion自增，並將JWTVersion放到JWT的Payload中再將JWT返回給用戶端。若需要提前撤回JWT，則伺服器端也會將JWTVersion自增，但不會將自增後的JWTVersion放到JWT的Payload中返回給用戶端 </font></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><font size="4.5"> JWT版本控制策略的具體實現方式 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 為用戶實體類(User類)增加一個long類型的JWTVersion屬性 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 修改登入程式碼，並增加發放JWT的程式碼，將JWTVersion屬性值自增，並將JWTVersion屬性值寫入JWT中 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - 撰寫一個操作篩選器，統一實現對所有控制器的Action方法進行JWT的檢查操作，且需要將JWTvalidationFilter服務註冊到Program.cs中的MVC全局篩選器中 </font></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><font size="4.5"> 試驗: </font></li>
+</ul>
+
+
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2024/06/19/AspDotNetCore%E5%85%A7%E7%BD%AE%E5%B0%8D%E6%93%8D%E4%BD%9CJWT%E9%80%B2%E8%A1%8C%E4%BA%86%E5%B0%81%E8%A3%9D/">Asp.Net Core內置對操作JWT進行了封裝</a>
         </h1>
         
@@ -316,35 +389,6 @@
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
         </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/06/18/%E6%8E%A2%E8%A8%8E%E6%8F%90%E5%89%8D%E6%92%A4%E5%9B%9EJWT%E7%9A%84%E8%AD%B0%E9%A1%8C/">探討提前撤回JWT的議題</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-06-18T09:08:38.000Z" itemprop="datePublished">2024-06-18</time>
-</a>
-
-            
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
         
         
     </section>
