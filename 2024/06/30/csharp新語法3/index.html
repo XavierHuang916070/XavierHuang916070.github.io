@@ -7,10 +7,10 @@
 
     
 
-    <title>csharp新語法 - 頂級語句、全域using | Xavier的技術博客</title>
+    <title>csharp新語法 - ?修飾符 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content=" C# 9.0新語法 - 頂級語句  1 - 直接在文件中撰寫入口方法內的程式碼，但仍然支持經典寫法(傳統寫法)   2 - 同一個專案中只能有一個文件具有頂級語句  3 - 頂級語句可直接使用await語法，也可宣告方法  C# 10.0新語法 - 全域using  1 - 將global修飾符添加到using前，此命名空間就就可應用到整個專案中，不需重複using  2 - 通常會創建一個專門的文件用來撰寫全域using程式碼 " />
+    <meta name="description" content=" C# 8.0新語法 - ?修飾符  1 - 複習:C#的資料類型分為值類型與引用類型(參考類型)，值類型的變數不可為空，引用類型的變數可為空   2 - 若是在值類型的後面加上?修飾符，則值類型就會變成可空值類型  請試驗下列程式碼 1234567891011121314using System;int? a = null;Nullable&amp;lt;int&amp;gt; b = null; // 可空值類型的另一種寫法Console.WriteLine($&amp;quot;&amp;#123;typeof(int?" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -141,15 +141,15 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            csharp新語法 - 頂級語句、全域using
+            csharp新語法 - ?修飾符
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/index.html">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/index.html">
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-06-30T01:25:20.000Z" itemprop="datePublished">2024-06-30</time>
+    <time class="vm" datetime="2024-06-30T02:35:52.000Z" itemprop="datePublished">2024-06-30</time>
 </a>
 
             
@@ -165,38 +165,50 @@
     <section class="article-body markdown-body">
         
         <ul>
-<li><p><font size="4.5"> C# 9.0新語法 - 頂級語句 </font></p>
+<li><p><font size="4.5"> C# 8.0新語法 - ?修飾符 </font></p>
 </li>
-<li><p><font size="4.5"> 1 - 直接在文件中撰寫入口方法內的程式碼，但仍然支持經典寫法(傳統寫法) </font> <span id="more"></span></p>
+<li><p><font size="4.5"> 1 - 複習:C#的資料類型分為值類型與引用類型(參考類型)，值類型的變數不可為空，引用類型的變數可為空 </font> <span id="more"></span></p>
+</li>
+<li><p><font size="4.5"> 2 - 若是在值類型的後面加上?修飾符，則值類型就會變成可空值類型 </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
 </li>
 </ul>
-<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/csharp%E6%96%B0%E8%AA%9E%E6%B3%951.png" class>
-
-<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/csharp%E6%96%B0%E8%AA%9E%E6%B3%952.png" class>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span>? a = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Nullable&lt;<span class="built_in">int</span>&gt; b = <span class="literal">null</span>; <span class="comment">// 可空值類型的另一種寫法</span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(<span class="built_in">int</span>?)&#125;</span>,<span class="subst">&#123;a&#125;</span>,<span class="subst">&#123;a==<span class="literal">null</span>&#125;</span>&quot;</span>);</span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(Nullable&lt;<span class="built_in">int</span>&gt;)&#125;</span>,<span class="subst">&#123;b&#125;</span>,<span class="subst">&#123;b == <span class="literal">null</span>&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">a = <span class="number">10</span>;</span><br><span class="line">b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(<span class="built_in">int</span>?)&#125;</span>,<span class="subst">&#123;a&#125;</span>,<span class="subst">&#123;a == <span class="literal">null</span>&#125;</span>&quot;</span>);</span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(Nullable&lt;<span class="built_in">int</span>&gt;)&#125;</span>,<span class="subst">&#123;b&#125;</span>,<span class="subst">&#123;b == <span class="literal">null</span>&#125;</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p><font size="4.5"> 2 - 同一個專案中只能有一個文件具有頂級語句 </font></p>
-</li>
-<li><p><font size="4.5"> 3 - 頂級語句可直接使用await語法，也可宣告方法 </font></p>
-</li>
+<li><font size="4.5"> 執行結果 </font></li>
 </ul>
-<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/csharp%E6%96%B0%E8%AA%9E%E6%B3%953.png" class>
+<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9531.png" class>
 
-<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/csharp%E6%96%B0%E8%AA%9E%E6%B3%954.png" class>
-
-<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/csharp%E6%96%B0%E8%AA%9E%E6%B3%955.png" class>
-
-<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/csharp%E6%96%B0%E8%AA%9E%E6%B3%956.png" class>
-
-<hr>
 <ul>
-<li><p><font size="4.5"> C# 10.0新語法 - 全域using </font></p>
+<li><p><font size="4.5"> 4 - 若是在引用類型的後面加上?修飾符，則編譯器會認為此引用類型的變數可能為空，此時最好需標示#nullable enable，否則編譯器會報警告 </font></p>
 </li>
-<li><p><font size="4.5"> 1 - 將global修飾符添加到using前，此命名空間就就可應用到整個專案中，不需重複using </font></p>
-</li>
-<li><p><font size="4.5"> 2 - 通常會創建一個專門的文件用來撰寫全域using程式碼 </font></p>
+<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
 </li>
 </ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>? s1 = <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">Console.WriteLine(s1);</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9532.png" class>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="meta">#nullable enable</span></span><br><span class="line"><span class="built_in">string</span>? s1 = <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">Console.WriteLine(s1);</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9533.png" class>
+
+<ul>
+<li><p><font size="4.5"> Ps: ??運算符 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - ??運算符叫做”空值合併運算符”，若??左邊的值為null，則回傳??右邊的值，若??左邊的值不為null，則回傳??左邊的值 </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> str1 = <span class="string">&quot;Hello World !!!&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> str2 = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(str1 ?? <span class="string">&quot;空值&quot;</span>);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(str2 ?? <span class="string">&quot;空值&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9534.png" class>
 
         
     </section>
@@ -214,10 +226,10 @@
         repo: "XavierHuang916070.github.io",
         owner: "XavierHuang916070",
         admin: ["XavierHuang916070"],
-        id: "f0d47541de21c06fefd055d2c71f5bd8",
+        id: "04e1bf335a8a672a5b409847e57d68d3",
         distractionFreeMode: true,
-        title: "csharp新語法 - 頂級語句、全域using",
-        body: "https://xavierhuang916070.github.io/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/",
+        title: "csharp新語法 - ?修飾符",
+        body: "https://xavierhuang916070.github.io/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/",
         labels: ["csharp"]
     }).render('comments');
     </script>
@@ -230,10 +242,8 @@
 
         
             
-            <a id="pagenext" href="/2024/06/20/FluentValidation/" class="article-next" title="FluentValidation"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%952/" class="article-next" title="csharp新語法 - 非嵌套式using釋放、命名空間新宣告方式"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/06/30/csharp%E6%96%B0%E8%AA%9E%E6%B3%952/" class="article-prev" title="csharp新語法 - 非嵌套式using釋放、命名空間新宣告方式"><i class="icon-arrow-left"></i></a>
             
         
 
