@@ -7,10 +7,10 @@
 
     
 
-    <title>csharp新語法 - ?修飾符 | Xavier的技術博客</title>
+    <title>用LINQ解題 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content=" C# 8.0新語法 - ?修飾符  1 - 複習:C#的資料類型分為值類型與引用類型(參考類型)，值類型的變數不可為空，引用類型的變數可為空   2 - 若是在值類型的後面加上?修飾符，則值類型就會變成可空值類型  請試驗下列程式碼 1234567891011121314using System;int? a = null;Nullable&amp;lt;int&amp;gt; b = null; // 可空值類型的另一種寫法Console.WriteLine($&amp;quot;&amp;#123;typeof(int?" />
+    <meta name="description" content=" 用LINQ解題  案例: 有一個用逗號分隔的表示成績的字串，計算這些成績的平均值，請使用LINQ 12345678910111213141516171819202122232425262728using System;using System.Linq;namespace _16_LINQ_用LINQ解題2&amp;#123;    public class Program    &amp;#123;        static void Main(string[] args)        &amp;#123;  " />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,21 +137,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            csharp新語法 - ?修飾符
+            用LINQ解題
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/2024/02/06/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/index.html">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2024/02/22/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C/index.html">
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-02-06T02:35:52.000Z" itemprop="datePublished">2024-02-06</time>
+    <time class="vm" datetime="2024-02-22T12:13:05.000Z" itemprop="datePublished">2024-02-22</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/csharpdotnet/" rel="tag">csharpdotnet</a>
+    <a class="article-tag-link" href="/tags/linkquery/" rel="tag">linkquery</a>
 </div>
 
 
@@ -161,50 +161,27 @@
     <section class="article-body markdown-body">
         
         <ul>
-<li><p><font size="4.5"> C# 8.0新語法 - ?修飾符 </font></p>
+<li><p><font size-4.5> 用LINQ解題 </font></p>
 </li>
-<li><p><font size="4.5"> 1 - 複習:C#的資料類型分為值類型與引用類型(參考類型)，值類型的變數不可為空，引用類型的變數可為空 </font> <span id="more"></span></p>
-</li>
-<li><p><font size="4.5"> 2 - 若是在值類型的後面加上?修飾符，則值類型就會變成可空值類型 </font></p>
-</li>
-<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
+<li><p><font size="4.5"> 案例: 有一個用逗號分隔的表示成績的字串，計算這些成績的平均值，請使用LINQ </font></p>
 </li>
 </ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span>? a = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Nullable&lt;<span class="built_in">int</span>&gt; b = <span class="literal">null</span>; <span class="comment">// 可空值類型的另一種寫法</span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(<span class="built_in">int</span>?)&#125;</span>,<span class="subst">&#123;a&#125;</span>,<span class="subst">&#123;a==<span class="literal">null</span>&#125;</span>&quot;</span>);</span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(Nullable&lt;<span class="built_in">int</span>&gt;)&#125;</span>,<span class="subst">&#123;b&#125;</span>,<span class="subst">&#123;b == <span class="literal">null</span>&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">a = <span class="number">10</span>;</span><br><span class="line">b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(<span class="built_in">int</span>?)&#125;</span>,<span class="subst">&#123;a&#125;</span>,<span class="subst">&#123;a == <span class="literal">null</span>&#125;</span>&quot;</span>);</span><br><span class="line">Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;<span class="keyword">typeof</span>(Nullable&lt;<span class="built_in">int</span>&gt;)&#125;</span>,<span class="subst">&#123;b&#125;</span>,<span class="subst">&#123;b == <span class="literal">null</span>&#125;</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">LINQ_</span>用<span class="title">LINQ</span>解題2</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> str = <span class="string">&quot;61,90,100,99,18,22,38,66,80,93,55,50,89&quot;</span>;</span><br><span class="line">            <span class="built_in">string</span>[] strArr = str.Split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> result = strArr.Select(e =&gt; Convert.ToInt32(e));</span><br><span class="line">            <span class="built_in">double</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> result)</span><br><span class="line">            &#123;</span><br><span class="line">                sum += item;</span><br><span class="line">            &#125;</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;平均值: <span class="subst">&#123;sum / result.Count()&#125;</span>&quot;</span>);</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;平均值: <span class="subst">&#123;result.Average()&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> result2 = str.Split(<span class="string">&quot;,&quot;</span>).Select(e =&gt; Convert.ToInt32(e))</span><br><span class="line">                .Average(e =&gt; e); <span class="comment">// Average(e =&gt; e)等同於Average()</span></span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;平均值: <span class="subst">&#123;result2&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><font size="4.5"> 執行結果 </font></li>
 </ul>
-<img src="/2024/02/06/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9531.png" class>
+<img src="/2024/02/22/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C1.png" class> <span id="more"></span>
 
 <ul>
-<li><p><font size="4.5"> 4 - 若是在引用類型的後面加上?修飾符，則編譯器會認為此引用類型的變數可能為空，此時最好需標示#nullable enable，否則編譯器會報警告 </font></p>
-</li>
-<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
-</li>
+<li><font size="4.5"> 案例: 統計一個字串中每個字母出現的頻率(忽略大小寫)，並按照由高到低的順序輸出出現頻率高於2次的字母與其出現的頻率，請使用LINQ </font></li>
 </ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>? s1 = <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">Console.WriteLine(s1);</span><br></pre></td></tr></table></figure>
-
-<img src="/2024/02/06/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9532.png" class>
-
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="meta">#nullable enable</span></span><br><span class="line"><span class="built_in">string</span>? s1 = <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">Console.WriteLine(s1);</span><br></pre></td></tr></table></figure>
-
-<img src="/2024/02/06/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9533.png" class>
-
-<ul>
-<li><p><font size="4.5"> Ps: ??運算符 </font></p>
-</li>
-<li><p><font size="4.5"> 1 - ??運算符叫做”空值合併運算符”，若??左邊的值為null，則回傳??右邊的值，若??左邊的值不為null，則回傳??左邊的值 </font></p>
-</li>
-<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
-</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> str1 = <span class="string">&quot;Hello World !!!&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> str2 = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(str1 ?? <span class="string">&quot;空值&quot;</span>);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(str2 ?? <span class="string">&quot;空值&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> _16_<span class="title">LINQ_</span>用<span class="title">LINQ</span>解題3</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> str = <span class="string">&quot;Hello World, hahah, heiheihei&quot;</span>;</span><br><span class="line">            <span class="keyword">var</span> result = str.Where(c =&gt; <span class="built_in">char</span>.IsLetter(c)).Select(c =&gt; <span class="built_in">char</span>.ToLower(c))</span><br><span class="line">                .GroupBy(c =&gt; c).Select(g =&gt; <span class="keyword">new</span> &#123; g.Key, 頻率 = g.Count() &#125;)</span><br><span class="line">                .OrderByDescending(e =&gt; e.頻率).Where(e =&gt; e.頻率 &gt; <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> result)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(item);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><font size="4.5"> 執行結果 </font></li>
 </ul>
-<img src="/2024/02/06/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/csharp%E6%96%B0%E8%AA%9E%E6%B3%9534.png" class>
+<img src="/2024/02/22/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C2.png" class>
 
         
     </section>
@@ -222,11 +199,11 @@
         repo: "XavierHuang916070.github.io",
         owner: "XavierHuang916070",
         admin: ["XavierHuang916070"],
-        id: "c8f64bd3a1d643471c0a83eaa9f2bbf0",
+        id: "8335a6191dc5dcd43a4a849d1b8a3d5c",
         distractionFreeMode: true,
-        title: "csharp新語法 - ?修飾符",
-        body: "https://xavierhuang916070.github.io/2024/02/06/csharp%E6%96%B0%E8%AA%9E%E6%B3%953/",
-        labels: ["csharpdotnet"]
+        title: "用LINQ解題",
+        body: "https://xavierhuang916070.github.io/2024/02/22/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C/",
+        labels: ["linkquery"]
     }).render('comments');
     </script>
 </div>
@@ -238,10 +215,10 @@
 
         
             
-            <a id="pagenext" href="/2024/02/05/csharp%E6%96%B0%E8%AA%9E%E6%B3%952/" class="article-next" title="csharp新語法 - 非嵌套式using釋放、命名空間新宣告方式"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/02/21/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8BLINQ%E7%9A%84%E5%85%B6%E4%BB%96%E7%94%A8%E6%B3%95/" class="article-next" title="LINQ基礎 - LINQ的其他用法"><i class="icon-arrow-right"></i></a>
             
             
-            <a id="pageprev" href="/2024/02/07/csharp%E6%96%B0%E8%AA%9E%E6%B3%954/" class="article-prev" title="csharp新語法 - Record類型"><i class="icon-arrow-left"></i></a>
+            <a id="pageprev" href="/2024/05/02/%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2%E9%96%8B%E7%99%BC%E6%A8%A1%E5%BC%8F/" class="article-prev" title="前後端分離開發模式"><i class="icon-arrow-left"></i></a>
             
         
 
