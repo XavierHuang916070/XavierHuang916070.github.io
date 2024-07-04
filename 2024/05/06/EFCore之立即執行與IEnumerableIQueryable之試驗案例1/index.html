@@ -228,6 +228,289 @@
 </ul>
 <img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B17.png" class>
 
+<ul>
+<li><font size="4.5"> 請試驗下列四組程式碼 </font></li>
+<li><font size="4.5"> (1) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .AsEnumerable().Where(o =&gt; o.Delivery.CompanyName == <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span>  order <span class="keyword">in</span> orders)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B18.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .Select(o=&gt;<span class="keyword">new</span>&#123;訂單編號=o.Id,訂單商品名=o.Name,訂單地址=o.Address,</span><br><span class="line">     訂單對應之快遞公司名=o.Delivery.CompanyName&#125;)</span><br><span class="line">    .AsEnumerable().Where(o =&gt; o.訂單對應之快遞公司名 == <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">     <span class="keyword">foreach</span> (<span class="keyword">var</span>  order <span class="keyword">in</span> orders)</span><br><span class="line">     &#123;</span><br><span class="line">         Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.訂單編號&#125;</span>,<span class="subst">&#123;order.訂單商品名&#125;</span>,</span></span><br><span class="line"><span class="string">         <span class="subst">&#123;order.訂單地址&#125;</span>&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B19.png" class>
+
+<ul>
+<li><font size="4.5"> (3) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName == <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B110.png" class>
+
+<ul>
+<li><font size="4.5"> (4) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .Select(o=&gt;<span class="keyword">new</span>&#123;訂單編號=o.Id,訂單商品名=o.Name,訂單地址=o.Address,</span><br><span class="line">     訂單對應之快遞公司名=o.Delivery.CompanyName&#125;)</span><br><span class="line">    .AsQueryable().Where(o =&gt; o.訂單對應之快遞公司名 == <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">     <span class="keyword">foreach</span> (<span class="keyword">var</span>  order <span class="keyword">in</span> orders)</span><br><span class="line">     &#123;</span><br><span class="line">         Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.訂單編號&#125;</span>,<span class="subst">&#123;order.訂單商品名&#125;</span>,</span></span><br><span class="line"><span class="string">         <span class="subst">&#123;order.訂單地址&#125;</span>&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B111.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font> </p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">     &#123;</span><br><span class="line">         Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B112.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B113.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.ToList());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><font size="4.5"> 執行結果 </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.ToList());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B114.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.ToList());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B115.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B116.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders</span><br><span class="line">    .Include(o =&gt; o.Delivery).OrderByDescending(o =&gt; o.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">1</span>)</span><br><span class="line">    .AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B117.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.AsEnumerable();</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.ToList());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B118.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.AsQueryable();</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.ToList());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B119.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .AsEnumerable();</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B120.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .AsQueryable();</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B121.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B122.png" class>
+
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B123.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">         .AsEnumerable()</span><br><span class="line">         .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">     Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B125.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">         .AsQueryable()</span><br><span class="line">         .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">     Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B126.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .OrderByDescending(o =&gt; o.Delivery.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">2</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B127.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .OrderByDescending(o =&gt; o.Delivery.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">2</span>)</span><br><span class="line">    .AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B128.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .OrderByDescending(o =&gt; o.Delivery.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">2</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>,</span></span><br><span class="line"><span class="string">        <span class="subst">&#123;order.Delivery.Id&#125;</span>,<span class="subst">&#123;order.Delivery.CompanyName&#125;</span>,</span></span><br><span class="line"><span class="string">        <span class="subst">&#123;order.Delivery.Number&#125;</span>,<span class="subst">&#123;order.Delivery.OrderId&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B129.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .OrderByDescending(o =&gt; o.Delivery.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">2</span>)</span><br><span class="line">    .AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>,</span></span><br><span class="line"><span class="string">        <span class="subst">&#123;order.Delivery.Id&#125;</span>,<span class="subst">&#123;order.Delivery.CompanyName&#125;</span>,</span></span><br><span class="line"><span class="string">        <span class="subst">&#123;order.Delivery.Number&#125;</span>,<span class="subst">&#123;order.Delivery.OrderId&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B130.png" class>
+
+<ul>
+<li><p><font size="4.5"> 請試驗下列兩組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .OrderByDescending(o =&gt; o.Delivery.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">2</span>)</span><br><span class="line">    .AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B131.png" class>
+
+<ul>
+<li><font size="4.5"> (2) </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.Include(o =&gt; o.Delivery)</span><br><span class="line">    .OrderByDescending(o =&gt; o.Delivery.Id)</span><br><span class="line">    .Where(o =&gt; o.Id != <span class="number">2</span>)</span><br><span class="line">    .AsQueryable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName != <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(orders.Count());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B132.png" class>
+
         
     </section>
 </article>
