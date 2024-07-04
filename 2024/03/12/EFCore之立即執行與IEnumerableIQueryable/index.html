@@ -7,10 +7,10 @@
 
     
 
-    <title>EFCore之立即執行與IEnumerableIQueryable | Xavier的技術博客</title>
+    <title>EFCore - 立即執行與IEnumerable、IQueryable | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" 立即執行與IEnumerable、IQueryable  1 - 當執行立即執行指令(例如:foreach、Count、Sum、Min、Max、ToList等)時，若EF Core C#語句中其操作物件為實現了IEnumerable介面之集合，則會在呼叫IEnumerable版本之Where、OrdeyBy、GroupBy等方法之前根據當前的語法樹、表達式生成對應的SQL語句進而從資料庫撈取資料到記憶體中，之後所呼叫的IEnumerable版本之Where、OrdeyBy、GroupBy等方法" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,25 +137,54 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            EFCore之立即執行與IEnumerableIQueryable
+            EFCore - 立即執行與IEnumerable、IQueryable
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/2024/07/03/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable/index.html">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2024/03/12/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable/index.html">
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-07-02T20:54:55.000Z" itemprop="datePublished">2024-07-03</time>
+    <time class="vm" datetime="2024-03-12T07:05:26.000Z" itemprop="datePublished">2024-03-12</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> 立即執行與IEnumerable、IQueryable </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 當執行立即執行指令(例如:foreach、Count、Sum、Min、Max、ToList等)時，若EF Core C#語句中其操作物件為實現了IEnumerable介面之集合，則會在呼叫IEnumerable版本之Where、OrdeyBy、GroupBy等方法之前根據當前的語法樹、表達式生成對應的SQL語句進而從資料庫撈取資料到記憶體中，之後所呼叫的IEnumerable版本之Where、OrdeyBy、GroupBy等方法均是在客戶端記憶體中進行過濾、排序、分組 </font> <span id="more"></span></p>
+</li>
+<li><p><font size="4.5"> 2 - IEnumerable版本之Where、OrdeyBy、GroupBy等方法均是在客戶端記憶體中進行過濾、排序、分組等操作，此作法稱之為客戶端評估 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - 當執行立即執行指令(例如:foreach、Count、Sum、Min、Max、ToList等)時，若EF Core C#語句中其操作物件為實現了IQueryable介面之集合，則會將後續所呼叫的IQueryable版本之Where、OrdeyBy、GroupBy等方法加入到語法樹、表達式中，加入完畢(遇到立即執行指令)或中途轉換為IEnumerable介面之集合則會根據最新的語法樹、表達式生成對應的SQL語句進而從資料庫撈取資料到記憶體中 </font></p>
+</li>
+<li><p><font size="4.5"> 4 - IQueryable版本之Where、OrdeyBy、GroupBy等方法均會被加入到語法樹、表達式中進而在資料庫伺服器端進行過濾、排序、分組等操作，此作法稱之為伺服器端評估 </font></p>
+</li>
+<li><p><font size="4.5"> 不管是IEnumerable版本之Where、OrdeyBy、GroupBy等方法還是IQueryable版本之Where、OrdeyBy、GroupBy等方法，均會被推遲至執行立即執行指令時才被安排執行 </font></p>
+</li>
+<li><p><font size="4.5"> DbSet為實現了IQueryable介面之集合，因此其Where、OrdeyBy、GroupBy等方法均是IQueryable版本 </font></p>
+</li>
+<li><p><font size="4.5"> AsEnumerable方法可將集合轉換為實現了IEnumerable介面之集合 </font></p>
+</li>
+<li><p><font size="4.5"> AsQueryable方法可將集合轉換為實現了IQueryable介面之集合 </font></p>
+</li>
+<li><p><font size="4.5"> 一般而言，若資料量較大，最好使用伺服器端評估，因為伺服器的效能一般都比客戶端主機高 </font></p>
+</li>
+<li><p><font size="4.5"> 若要進行特殊的LINQ操作而造成EF Core Sql Server Provider無法成功解析語法樹、表達式的情況，就必須使用客戶端評估 </font></p>
+</li>
+</ul>
+
         
     </section>
 </article>
@@ -172,11 +201,11 @@
         repo: "XavierHuang916070.github.io",
         owner: "XavierHuang916070",
         admin: ["XavierHuang916070"],
-        id: "577d64f1abf1bfa62031aae6e82d8028",
+        id: "6a01cfd8fded44a99359d3fdd52ac87d",
         distractionFreeMode: true,
-        title: "EFCore之立即執行與IEnumerableIQueryable",
-        body: "https://xavierhuang916070.github.io/2024/07/03/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable/",
-        labels: []
+        title: "EFCore - 立即執行與IEnumerable、IQueryable",
+        body: "https://xavierhuang916070.github.io/2024/03/12/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable/",
+        labels: ["efcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +217,10 @@
 
         
             
-            <a id="pagenext" href="/2024/06/20/FluentValidation/" class="article-next" title="FluentValidation"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/03/08/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8B%E7%B5%90%E6%A7%8B%E5%8C%96%E6%97%A5%E8%AA%8C%E8%88%87%E9%9B%86%E4%B8%AD%E5%8C%96%E6%97%A5%E8%AA%8C/" class="article-next" title="日誌系統 - 結構化日誌與集中化日誌"><i class="icon-arrow-right"></i></a>
             
             
-            <a id="pageprev" href="/2024/07/03/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/" class="article-prev" title="EFCore之立即執行與IEnumerableIQueryable之試驗案例1"><i class="icon-arrow-left"></i></a>
+            <a id="pageprev" href="/2024/05/02/%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2%E9%96%8B%E7%99%BC%E6%A8%A1%E5%BC%8F/" class="article-prev" title="前後端分離開發模式"><i class="icon-arrow-left"></i></a>
             
         
 
