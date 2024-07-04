@@ -136,6 +136,66 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/">EFCore - 立即執行與IEnumerable、IQueryable之試驗案例</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/categories/efcore/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-05-06T08:21:35.000Z" itemprop="datePublished">2024-05-06</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> 立即執行與IEnumerable、IQueryable之試驗案例 </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列三組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName == <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">     <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">     &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//var orders = ((IEnumerable&lt;Order&gt;)dbContext.Orders)</span></span><br><span class="line">    <span class="comment">//    .Where(o =&gt; o.Delivery.CompanyName == &quot;大貓快遞&quot;);</span></span><br><span class="line">    <span class="comment">//foreach (var order in orders)</span></span><br><span class="line">    <span class="comment">//&#123;</span></span><br><span class="line">    <span class="comment">//    Console.WriteLine($&quot;&#123;order.Id&#125;,&#123;order.Name&#125;,&#123;order.Address&#125;&quot;);</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B11.png" class>
+
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B12.png" class>
+
+<ul>
+<li><p><font size="4.5"> 上述程式碼報錯之原因:當執行foreach(屬於立即執行指令)時，因為操作物件中途被轉換為實現了IEnumerable介面之集合，因此會在呼叫IEnumerable版本之Where方法之前根據當前的語法樹、表達式生成對應的SQL語句進而從資料庫撈取資料到記憶體中，之後所呼叫的IEnumerable版本之Where方法會在客戶端記憶體中進行過濾，但因為IEnumerable版本之Where方法並沒有被加入到語法樹、表達式中且是在客戶端記憶體中進行過濾，因此會喪失導航路由、關聯語法糖的特性，除非手動Include，否則無法導航路由、關聯至T_Deliveries表進而進行過濾，因此會報錯 </font></p></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2024/03/12/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable/">EFCore - 立即執行與IEnumerable、IQueryable</a>
         </h1>
         
