@@ -136,6 +136,59 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行實體相關的原生SQL查詢語句</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-07-08T14:10:43.000Z" itemprop="datePublished">2024-07-08</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> EF Core執行實體相關的原生SQL查詢語句 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 若要執行原生SQL查詢語句，且查詢結果能對應到一個實體，就可呼叫對應實體DbSet的FromSqlInterpolated()，也可使用字串內插來達到參數化查詢的目的 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> titlePattern = <span class="string">&quot;%標題%&quot;</span>;</span><br><span class="line">    <span class="keyword">var</span> articles = dbContext.Articles.FromSqlInterpolated(</span><br><span class="line">         @<span class="string">$&quot;select * from T_Articles where Title like <span class="subst">&#123;titlePattern&#125;</span></span></span><br><span class="line"><span class="string">         order by newid();</span></span><br><span class="line"><span class="string">         &quot;</span>); <span class="comment">// order by newid() - 根據guid排序(隨機排序)</span></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles)</span><br><span class="line">    &#123;</span><br><span class="line">         Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;article.Id&#125;</span>,<span class="subst">&#123;article.Title&#125;</span>,</span></span><br><span class="line"><span class="string">         <span class="subst">&#123;article.Content&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%8E%9F%E7%94%9FSQL%E9%9D%9E%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行原生SQL非查詢語句</a>
         </h1>
         
@@ -303,35 +356,6 @@
     <i class="icon-calendar vm"></i>
     
     <time class="vm" datetime="2024-07-08T01:58:14.000Z" itemprop="datePublished">2024-07-08</time>
-</a>
-
-            
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/">EFCore之EFCore執行實體相關的原生SQL查詢語句</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-07-08T01:57:36.000Z" itemprop="datePublished">2024-07-08</time>
 </a>
 
             

@@ -7,10 +7,10 @@
 
     
 
-    <title>EFCore之EFCore執行實體相關的原生SQL查詢語句 | Xavier的技術博客</title>
+    <title>EFCore - EFCore執行實體相關的原生SQL查詢語句 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" EF Core執行實體相關的原生SQL查詢語句  1 - 若要執行原生SQL查詢語句，且查詢結果能對應到一個實體，就可呼叫對應實體DbSet的FromSqlInterpolated()，也可使用字串內插來達到參數化查詢的目的  2 - 請試驗下列程式碼 12345678910111213using (MyDbContext dbContext = new MyDbContext())&amp;#123;    string titlePattern = &amp;quot;%標題%&amp;quot;;    var" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,7 +137,7 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            EFCore之EFCore執行實體相關的原生SQL查詢語句
+            EFCore - EFCore執行實體相關的原生SQL查詢語句
         </h1>
         
         <div class="article-meta clearfix">
@@ -145,17 +145,81 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-07-08T01:57:36.000Z" itemprop="datePublished">2024-07-08</time>
+    <time class="vm" datetime="2024-07-08T14:10:43.000Z" itemprop="datePublished">2024-07-08</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> EF Core執行實體相關的原生SQL查詢語句 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 若要執行原生SQL查詢語句，且查詢結果能對應到一個實體，就可呼叫對應實體DbSet的FromSqlInterpolated()，也可使用字串內插來達到參數化查詢的目的 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> titlePattern = <span class="string">&quot;%標題%&quot;</span>;</span><br><span class="line">    <span class="keyword">var</span> articles = dbContext.Articles.FromSqlInterpolated(</span><br><span class="line">         @<span class="string">$&quot;select * from T_Articles where Title like <span class="subst">&#123;titlePattern&#125;</span></span></span><br><span class="line"><span class="string">         order by newid();</span></span><br><span class="line"><span class="string">         &quot;</span>); <span class="comment">// order by newid() - 根據guid排序(隨機排序)</span></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles)</span><br><span class="line">    &#123;</span><br><span class="line">         Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;article.Id&#125;</span>,<span class="subst">&#123;article.Title&#125;</span>,</span></span><br><span class="line"><span class="string">         <span class="subst">&#123;article.Content&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font> <span id="more"></span></li>
+</ul>
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A51.png" class>
+
+<ul>
+<li><font size="4.5"> 3 - 請試驗下列程式碼 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> titlePattern = <span class="string">&quot;%標題%&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> articles = dbContext.Articles.FromSqlInterpolated(</span><br><span class="line">        @<span class="string">$&quot;select * from T_Articles where Title like <span class="subst">&#123;titlePattern&#125;</span></span></span><br><span class="line"><span class="string">        order by newid()</span></span><br><span class="line"><span class="string">        &quot;</span>); <span class="comment">// order by newid() - 根據guid排序(隨機排序)</span></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles.Skip(<span class="number">1</span>).Take(<span class="number">3</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;article.Id&#125;</span>,<span class="subst">&#123;article.Title&#125;</span>,</span></span><br><span class="line"><span class="string">        <span class="subst">&#123;article.Content&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A52.png" class>
+
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A53.png" class>
+
+<ul>
+<li><font size="4.5"> 4 - 請試驗下列程式碼 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> titlePattern = <span class="string">&quot;%標題%&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> articles = dbContext.Articles.FromSqlInterpolated(</span><br><span class="line">         @<span class="string">$&quot;select * from T_Articles where Title like <span class="subst">&#123;titlePattern&#125;</span></span></span><br><span class="line"><span class="string">         &quot;</span>);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles.OrderBy(a=&gt;Guid.NewGuid()).Skip(<span class="number">1</span>).Take(<span class="number">3</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;article.Id&#125;</span>,<span class="subst">&#123;article.Title&#125;</span>,</span></span><br><span class="line"><span class="string">        <span class="subst">&#123;article.Content&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A54.png" class>
+
+<ul>
+<li><p><font size="4.5"> 5 - 由上述可得知，我們可混用原生SQL查詢語句與EF Core的標準操作 </font></p>
+</li>
+<li><p><font size="4.5"> 6 - 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="built_in">string</span> titlePattern = <span class="string">&quot;%標題%&quot;</span>;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">var</span> articles = dbContext.Articles.FromSqlInterpolated(</span><br><span class="line">         @<span class="string">$&quot;select * from T_Articles where Title like <span class="subst">&#123;titlePattern&#125;</span></span></span><br><span class="line"><span class="string">         &quot;</span>);</span><br><span class="line">     <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles.Include(a=&gt;a.Comments)</span><br><span class="line">                  .OrderBy(a=&gt;Guid.NewGuid()).Skip(<span class="number">1</span>).Take(<span class="number">3</span>))</span><br><span class="line">    &#123;</span><br><span class="line">         Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;article.Id&#125;</span>,<span class="subst">&#123;article.Title&#125;</span></span></span><br><span class="line"><span class="string">        ,<span class="subst">&#123;article.Content&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">         <span class="keyword">foreach</span> (<span class="keyword">var</span> comment <span class="keyword">in</span> article.Comments)</span><br><span class="line">         &#123;</span><br><span class="line">             Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;comment.Id&#125;</span>,<span class="subst">&#123;comment.Message&#125;</span>,</span></span><br><span class="line"><span class="string">            <span class="subst">&#123;comment.ArticleId&#125;</span>&quot;</span>);</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         Console.WriteLine();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A55.png" class>
+
+<hr>
+<ul>
+<li><p><font size="4.5"> EF Core執行實體相關的原生SQL查詢語句之侷限性 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 返回查詢結果之欄位必須與實體類之屬性完全匹配到且名稱完全相同 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 只能執行單表查詢，無法使用Join來關聯查詢，但後續可透過LINQ的Include()來進行功能補強 </font></p>
+</li>
+</ul>
+
         
     </section>
 </article>
@@ -174,9 +238,9 @@
         admin: ["XavierHuang916070"],
         id: "212ff2298d7e91ede221cfb85af28fd1",
         distractionFreeMode: true,
-        title: "EFCore之EFCore執行實體相關的原生SQL查詢語句",
+        title: "EFCore - EFCore執行實體相關的原生SQL查詢語句",
         body: "https://xavierhuang916070.github.io/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/",
-        labels: []
+        labels: ["efcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +252,8 @@
 
         
             
-            <a id="pagenext" href="/2024/07/05/EFCore%E4%B9%8BIQueryable%E7%9A%84%E5%BB%B6%E9%81%B2%E5%9F%B7%E8%A1%8C/" class="article-next" title="EFCore - IQueryable的延遲執行"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%8E%9F%E7%94%9FSQL%E9%9D%9E%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/" class="article-next" title="EFCore - EFCore執行原生SQL非查詢語句"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/" class="article-prev" title="EFCore之EFCore執行任意的原生SQL語句"><i class="icon-arrow-left"></i></a>
             
         
 
