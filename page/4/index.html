@@ -136,6 +136,155 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2024/05/21/%E5%BF%AB%E5%8F%96%E4%B8%AD%E9%96%93%E4%BB%B6/">快取中間件</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-05-21T06:38:11.000Z" itemprop="datePublished">2024-05-21</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><font size="4.5"> 快取中間件 </font></li>
+<li><font size="4.5"> 1 - 伺服器端也可設置快取，而在Asp.Net Core專案中，伺服器端快取的其中一個實現技術為”快取中間件” </font></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/05/21/%E5%BF%AB%E5%8F%96%E4%B8%AD%E9%96%93%E4%BB%B6/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/">快取基礎</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-05-20T05:07:52.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><font size="4.5"> 快取的基礎概念</font></li>
+<li><font size="4.5"> 1 - 快取(Cache)是做系統優化時簡單又有效的工具之一 </font></li>
+<li><font size="4.5"> 2 - 快取的概念圖如下: </font></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/05/20/%E5%BF%AB%E5%8F%96%E5%9F%BA%E7%A4%8E/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/">EFCore - 立即執行與IEnumerable、IQueryable之試驗案例</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-05-06T08:21:35.000Z" itemprop="datePublished">2024-05-06</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> 立即執行與IEnumerable、IQueryable之試驗案例 </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列三組程式碼 </font></p>
+</li>
+<li><p><font size="4.5"> (1) </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> orders = dbContext.Orders.AsEnumerable()</span><br><span class="line">    .Where(o =&gt; o.Delivery.CompanyName == <span class="string">&quot;大貓快遞&quot;</span>);</span><br><span class="line">     <span class="keyword">foreach</span> (<span class="keyword">var</span> order <span class="keyword">in</span> orders)</span><br><span class="line">     &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;order.Id&#125;</span>,<span class="subst">&#123;order.Name&#125;</span>,<span class="subst">&#123;order.Address&#125;</span>&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//var orders = ((IEnumerable&lt;Order&gt;)dbContext.Orders)</span></span><br><span class="line">    <span class="comment">//    .Where(o =&gt; o.Delivery.CompanyName == &quot;大貓快遞&quot;);</span></span><br><span class="line">    <span class="comment">//foreach (var order in orders)</span></span><br><span class="line">    <span class="comment">//&#123;</span></span><br><span class="line">    <span class="comment">//    Console.WriteLine($&quot;&#123;order.Id&#125;,&#123;order.Name&#125;,&#123;order.Address&#125;&quot;);</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B11.png" class>
+
+<img src="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B12.png" class>
+
+<ul>
+<li><p><font size="4.5"> 上述程式碼報錯之原因:當執行foreach(屬於立即執行指令)時，因為操作物件中途被轉換為實現了IEnumerable介面之集合，因此會在呼叫IEnumerable版本之Where方法之前根據當前的語法樹、表達式生成對應的SQL語句進而從資料庫撈取資料到記憶體中，之後所呼叫的IEnumerable版本之Where方法會在客戶端記憶體中進行過濾，但因為IEnumerable版本之Where方法並沒有被加入到語法樹、表達式中且是在客戶端記憶體中進行過濾，因此會喪失導航路由、關聯語法糖的特性，除非手動Include，否則無法導航路由、關聯至T_Deliveries表進而進行過濾，因此會報錯 </font></p></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/05/06/EFCore%E4%B9%8B%E7%AB%8B%E5%8D%B3%E5%9F%B7%E8%A1%8C%E8%88%87IEnumerableIQueryable%E4%B9%8B%E8%A9%A6%E9%A9%97%E6%A1%88%E4%BE%8B1/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2024/05/04/AspDotNetCore%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5%E7%9A%84%E4%BD%BF%E7%94%A8/">Asp.Net Core依賴注入的使用</a>
         </h1>
         
@@ -467,141 +616,6 @@
         
         <p class="article-more-link">
             <a href="/2024/02/22/%E7%94%A8LINQ%E8%A7%A3%E9%A1%8C/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/02/21/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8BLINQ%E7%9A%84%E5%85%B6%E4%BB%96%E7%94%A8%E6%B3%95/">LINQ基礎 - LINQ的其他用法</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-02-21T13:05:24.000Z" itemprop="datePublished">2024-02-21</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/linkquery/" rel="tag">linkquery</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><p><font size="4.5"> LINQ基礎之LINQ的其他用法 </font></p>
-</li>
-<li><p><font size="4.5"> 1 -  使用Where、OrderBy、Select等擴展方法進行資料處理，叫做”LINQ方法語法”，還有一種資料處理的方式叫做”LINQ查詢語法”, 如下所示: </font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2024/02/21/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8BLINQ%E7%9A%84%E5%85%B6%E4%BB%96%E7%94%A8%E6%B3%95/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/02/14/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E9%8F%88%E5%BC%8F%E5%91%BC%E5%8F%AB/">LINQ基礎 - 鏈式呼叫</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-02-14T11:36:51.000Z" itemprop="datePublished">2024-02-14</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/linkquery/" rel="tag">linkquery</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><p><font size="4.5"> LINQ基礎之鏈式呼叫 </font></p>
-</li>
-<li><p><font size="4.5"> 1 -  因為Where、Select、OrderBy、GroupBy、Take、Skip…的返回值為IEnumerable<T>類型, 因此可使用鏈式調用 </T></font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2024/02/14/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E9%8F%88%E5%BC%8F%E5%91%BC%E5%8F%AB/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/02/14/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E9%9B%86%E5%90%88%E8%BD%89%E6%8F%9B/">LINQ基礎 - 集合轉換</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-02-14T07:28:16.000Z" itemprop="datePublished">2024-02-14</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/linkquery/" rel="tag">linkquery</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><p><font size="4.5"> LINQ基礎之集合轉換 </font></p>
-</li>
-<li><p><font size="4.5"> 1 - 我們可使用ToArray方法或ToList方法分別將IEnumerable&lt; T &gt;類型轉換為陣列類型或List&lt; T &gt;類型 </font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2024/02/14/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E9%9B%86%E5%90%88%E8%BD%89%E6%8F%9B/#more">
                 <span class="vm">閱讀更多</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
