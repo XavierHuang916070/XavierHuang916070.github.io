@@ -136,6 +136,61 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/">EFCore - EFCore優化之AsNoTracking</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-07-08T15:25:38.000Z" itemprop="datePublished">2024-07-08</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> EF Core優化之AsNoTracking </font></p>
+</li>
+<li><p><font size="4.5"> 當執行完立即執行指令後，會將查詢到的資料庫實體之資料(記錄)存放在記憶體中進而給實體類物件引用(參考)，同時也會建立相對應的快照，而跟蹤實體類物件之狀態需借助快照，但有時候我們只是純粹要查詢資料庫實體之資料(記錄)而不需要對資料庫實體有任何的異動，此時使用快照就顯得不太需要了，若要關閉一個實體類物件的快照跟蹤機制可使用AsNoTracking() </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> articles = dbContext.Articles.Take(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//articles已被跟蹤,記憶體中存放3個快照,但後續沒有任何異動需求,因此徒占記憶體空間</span></span><br><span class="line"></span><br><span class="line">         Console.WriteLine(article.Content);</span><br><span class="line">         Console.WriteLine(dbContext.Entry(article).State);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(<span class="string">&quot;==============================&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> articles2 = dbContext.Articles.Take(<span class="number">3</span>).AsNoTracking();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// articles2已關閉快照跟蹤機制</span></span><br><span class="line"></span><br><span class="line">         Console.WriteLine(article.Content);</span><br><span class="line">         Console.WriteLine(dbContext.Entry(article).State);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking1.png" class>
+        
+        <p class="article-more-link">
+            <a href="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93%E5%AF%A6%E9%AB%94%E6%95%B8%E6%93%9A%E8%AE%8A%E4%BA%86/">EFCore - EFCore如何知道實體資料變了</a>
         </h1>
         
@@ -446,35 +501,6 @@
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
         </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/">EFCore優化之AsNoTracking</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-07-08T05:13:05.000Z" itemprop="datePublished">2024-07-08</time>
-</a>
-
-            
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
         
         
     </section>

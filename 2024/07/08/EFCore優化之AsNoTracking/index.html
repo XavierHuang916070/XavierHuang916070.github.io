@@ -7,10 +7,10 @@
 
     
 
-    <title>EFCore優化之AsNoTracking | Xavier的技術博客</title>
+    <title>EFCore - EFCore優化之AsNoTracking | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" EF Core優化之AsNoTracking  當執行完立即執行指令後，會將查詢到的資料庫實體之資料(記錄)存放在記憶體中進而給實體類物件引用(參考)，同時也會建立相對應的快照，而跟蹤實體類物件之狀態需借助快照，但有時候我們只是純粹要查詢資料庫實體之資料(記錄)而不需要對資料庫實體有任何的異動，此時使用快照就顯得不太需要了，若要關閉一個實體類物件的快照跟蹤機制可使用AsNoTracking()  請試驗下列程式碼 123456789101112131415161718192021222324u" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,7 +137,7 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            EFCore優化之AsNoTracking
+            EFCore - EFCore優化之AsNoTracking
         </h1>
         
         <div class="article-meta clearfix">
@@ -145,17 +145,70 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-07-08T05:13:05.000Z" itemprop="datePublished">2024-07-08</time>
+    <time class="vm" datetime="2024-07-08T15:25:38.000Z" itemprop="datePublished">2024-07-08</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> EF Core優化之AsNoTracking </font></p>
+</li>
+<li><p><font size="4.5"> 當執行完立即執行指令後，會將查詢到的資料庫實體之資料(記錄)存放在記憶體中進而給實體類物件引用(參考)，同時也會建立相對應的快照，而跟蹤實體類物件之狀態需借助快照，但有時候我們只是純粹要查詢資料庫實體之資料(記錄)而不需要對資料庫實體有任何的異動，此時使用快照就顯得不太需要了，若要關閉一個實體類物件的快照跟蹤機制可使用AsNoTracking() </font></p>
+</li>
+<li><p><font size="4.5"> 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> articles = dbContext.Articles.Take(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//articles已被跟蹤,記憶體中存放3個快照,但後續沒有任何異動需求,因此徒占記憶體空間</span></span><br><span class="line"></span><br><span class="line">         Console.WriteLine(article.Content);</span><br><span class="line">         Console.WriteLine(dbContext.Entry(article).State);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Console.WriteLine(<span class="string">&quot;==============================&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> articles2 = dbContext.Articles.Take(<span class="number">3</span>).AsNoTracking();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// articles2已關閉快照跟蹤機制</span></span><br><span class="line"></span><br><span class="line">         Console.WriteLine(article.Content);</span><br><span class="line">         Console.WriteLine(dbContext.Entry(article).State);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking1.png" class> <span id="more"></span>
+
+<ul>
+<li><font size="4.5"> 請試驗下列程式碼 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">      <span class="keyword">var</span> articles = dbContext.Articles.Take(<span class="number">3</span>).ToList();</span><br><span class="line">      Console.WriteLine(dbContext.Entry(articles[<span class="number">0</span>]).State);</span><br><span class="line">      Console.WriteLine(dbContext.Entry(articles[<span class="number">1</span>]).State);</span><br><span class="line">      Console.WriteLine(dbContext.Entry(articles[<span class="number">2</span>]).State);</span><br><span class="line">      Console.WriteLine(<span class="string">&quot;==============================&quot;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> articles2 = dbContext.Articles.Take(<span class="number">3</span>).AsNoTracking().ToList();</span><br><span class="line">      Console.WriteLine(dbContext.Entry(articles2[<span class="number">0</span>]).State);</span><br><span class="line">      Console.WriteLine(dbContext.Entry(articles2[<span class="number">1</span>]).State);</span><br><span class="line">      Console.WriteLine(dbContext.Entry(articles2[<span class="number">2</span>]).State);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking2.png" class>
+
+<ul>
+<li><font size="4.5"> 請試驗下列程式碼 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">var</span> articles = dbContext.Articles.Take(<span class="number">3</span>).AsNoTracking().ToList();</span><br><span class="line">     articles[<span class="number">0</span>].Price += <span class="number">300</span>;</span><br><span class="line">     articles[<span class="number">1</span>].Price += <span class="number">400</span>;</span><br><span class="line">     articles[<span class="number">2</span>].Price += <span class="number">500</span>;</span><br><span class="line"></span><br><span class="line">     Console.WriteLine(dbContext.Entry(articles[<span class="number">0</span>]).State);</span><br><span class="line">     Console.WriteLine(dbContext.Entry(articles[<span class="number">1</span>]).State);</span><br><span class="line">     Console.WriteLine(dbContext.Entry(articles[<span class="number">2</span>]).State);</span><br><span class="line">     dbContext.SaveChanges();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行前 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking3.png" class>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking4.png" class>
+
+<img src="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking5.png" class>
+
+<ul>
+<li><p><font size="4.5"> 由上述執行結果可得知，當我們關閉實體類物件的快照跟蹤機制後，由於無法跟蹤實體類物件之狀態究竟是什麼，也就無法執行任何異動操作，由Logging可得知，資料庫伺服器並沒有執行更新操作 </font></p>
+</li>
+<li><p><font size="4.5"> 結論:當我們確定針對一個實體類物件的操作不會涉及到任何異動操作時，可考慮關閉此實體類物件的快照跟蹤機制來節省記憶體空間 </font></p>
+</li>
+</ul>
+
         
     </section>
 </article>
@@ -174,9 +227,9 @@
         admin: ["XavierHuang916070"],
         id: "99549a1041dcc0f76b8e309feb4b0a87",
         distractionFreeMode: true,
-        title: "EFCore優化之AsNoTracking",
+        title: "EFCore - EFCore優化之AsNoTracking",
         body: "https://xavierhuang916070.github.io/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/",
-        labels: []
+        labels: ["efcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +241,8 @@
 
         
             
-            <a id="pagenext" href="/2024/07/05/EFCore%E4%B9%8BIQueryable%E7%9A%84%E5%BB%B6%E9%81%B2%E5%9F%B7%E8%A1%8C/" class="article-next" title="EFCore - IQueryable的延遲執行"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93%E5%AF%A6%E9%AB%94%E6%95%B8%E6%93%9A%E8%AE%8A%E4%BA%86/" class="article-next" title="EFCore - EFCore如何知道實體資料變了"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/07/08/EFCore%E4%B9%8B%E5%AE%A2%E6%88%B6%E7%AB%AF%E8%A9%95%E4%BC%B0%E7%9A%84%E6%87%89%E7%94%A8/" class="article-prev" title="EFCore - 客戶端評估的應用"><i class="icon-arrow-left"></i></a>
             
         
 
