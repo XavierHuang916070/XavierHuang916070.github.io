@@ -136,6 +136,59 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行任意的原生SQL語句</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-07-08T14:38:50.000Z" itemprop="datePublished">2024-07-08</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> EF Core執行任意的原生SQL語句 </font></p>
+</li>
+<li><p><font size="4.5"> 透過底層的ADO.NET來執行任意的原生SQL語句，至於何時需要用到這種方式呢? </font></p>
+</li>
+<li><p><font size="4.5"> 1 - FromSqlInterpolated()只能進行實體相關的原生SQL查詢，即:返回查詢結果之欄位必須與實體類之屬性完全匹配到且名稱完全相同，有鑑於此，我們可透過底層的ADO.NET來實現非實體相關的原生SQL查詢 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - FromSqlInterpolated()只能執行單表查詢，雖然配合LINQ的Include()可實現多表關聯查詢，但生成的SQL語句卻相當複雜，有鑑於此，我們可透過底層的ADO.NET來實現多表關聯查詢 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - EF Core允許將視圖或Stored Procedure映射為實體，而我們可透過底層的ADO.NET來將查詢語句包裝成視圖或Stored Procedure進而遷移至資料庫中，過程中需事先宣告對映的實體類，且也要在DbContext中配置對應的DbSet </font></p>
+</li>
+<li><p><font size="4.5"> Ps:不推薦撰寫視圖、Stored Procedure，因為若將過多的查詢語句包裝成視圖、Stored Procedure會造成DbSet膨脹，不利於專案的維護 </font></p></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行實體相關的原生SQL查詢語句</a>
         </h1>
         
@@ -336,35 +389,6 @@
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
         </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/">EFCore之EFCore執行任意的原生SQL語句</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-07-08T01:58:14.000Z" itemprop="datePublished">2024-07-08</time>
-</a>
-
-            
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
         
         
     </section>

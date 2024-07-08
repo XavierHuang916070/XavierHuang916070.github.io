@@ -7,10 +7,10 @@
 
     
 
-    <title>EFCore之EFCore執行任意的原生SQL語句 | Xavier的技術博客</title>
+    <title>EFCore - EFCore執行任意的原生SQL語句 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" EF Core執行任意的原生SQL語句  透過底層的ADO.NET來執行任意的原生SQL語句，至於何時需要用到這種方式呢?  1 - FromSqlInterpolated()只能進行實體相關的原生SQL查詢，即:返回查詢結果之欄位必須與實體類之屬性完全匹配到且名稱完全相同，有鑑於此，我們可透過底層的ADO.NET來實現非實體相關的原生SQL查詢  2 - FromSqlInterpolated()只能執行單表查詢，雖然配合LINQ的Include()可實現多表關聯查詢，但生成的SQL語句卻相" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -137,7 +137,7 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            EFCore之EFCore執行任意的原生SQL語句
+            EFCore - EFCore執行任意的原生SQL語句
         </h1>
         
         <div class="article-meta clearfix">
@@ -145,17 +145,81 @@
     
     <i class="icon-calendar vm"></i>
     
-    <time class="vm" datetime="2024-07-08T01:58:14.000Z" itemprop="datePublished">2024-07-08</time>
+    <time class="vm" datetime="2024-07-08T14:38:50.000Z" itemprop="datePublished">2024-07-08</time>
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        
+        <ul>
+<li><p><font size="4.5"> EF Core執行任意的原生SQL語句 </font></p>
+</li>
+<li><p><font size="4.5"> 透過底層的ADO.NET來執行任意的原生SQL語句，至於何時需要用到這種方式呢? </font></p>
+</li>
+<li><p><font size="4.5"> 1 - FromSqlInterpolated()只能進行實體相關的原生SQL查詢，即:返回查詢結果之欄位必須與實體類之屬性完全匹配到且名稱完全相同，有鑑於此，我們可透過底層的ADO.NET來實現非實體相關的原生SQL查詢 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - FromSqlInterpolated()只能執行單表查詢，雖然配合LINQ的Include()可實現多表關聯查詢，但生成的SQL語句卻相當複雜，有鑑於此，我們可透過底層的ADO.NET來實現多表關聯查詢 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - EF Core允許將視圖或Stored Procedure映射為實體，而我們可透過底層的ADO.NET來將查詢語句包裝成視圖或Stored Procedure進而遷移至資料庫中，過程中需事先宣告對映的實體類，且也要在DbContext中配置對應的DbSet </font></p>
+</li>
+<li><p><font size="4.5"> Ps:不推薦撰寫視圖、Stored Procedure，因為若將過多的查詢語句包裝成視圖、Stored Procedure會造成DbSet膨脹，不利於專案的維護 </font> <span id="more"></span></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><font size="4.5"> 透過底層的ADO.NET來執行任意的原生SQL語句之案例 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">using</span> (SqlConnection conn = (SqlConnection)dbContext.Database.GetDbConnection())</span><br><span class="line">     &#123;</span><br><span class="line">         <span class="keyword">if</span> (conn.State != System.Data.ConnectionState.Open)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">await</span> conn.OpenAsync();</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">using</span> (SqlCommand cmd = <span class="keyword">new</span> SqlCommand(<span class="string">&quot;select Price, Count(*) as Count from </span></span><br><span class="line"><span class="string">         T_Articles group by Price;&quot;</span>, conn))</span><br><span class="line">         &#123;</span><br><span class="line">             SqlDataReader reader = <span class="keyword">await</span> cmd.ExecuteReaderAsync();</span><br><span class="line">             <span class="keyword">while</span> (<span class="keyword">await</span> reader.ReadAsync())</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="built_in">double</span> price = reader.GetDouble(<span class="number">0</span>);</span><br><span class="line">                 <span class="built_in">int</span> count = reader.GetInt32(<span class="number">1</span>);</span><br><span class="line">                 Console.Write(<span class="string">$&quot;<span class="subst">&#123;reader.GetName(<span class="number">0</span>)&#125;</span>:<span class="subst">&#123;price&#125;</span> </span></span><br><span class="line"><span class="string">                <span class="subst">&#123;reader.GetName(<span class="number">1</span>)&#125;</span>:<span class="subst">&#123;count&#125;</span>\n&quot;</span>);</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         Console.WriteLine(<span class="string">&quot;====================&quot;</span>);</span><br><span class="line"></span><br><span class="line">         <span class="keyword">using</span> (SqlDataAdapter adapter = <span class="keyword">new</span> SqlDataAdapter</span><br><span class="line">         (<span class="string">&quot;select Price, Count(*) as Count from </span></span><br><span class="line"><span class="string">         T_Articles group by Price;&quot;</span>, conn))</span><br><span class="line">         &#123;</span><br><span class="line">             DataTable dataTable = <span class="keyword">new</span> DataTable();</span><br><span class="line">             adapter.Fill(dataTable);</span><br><span class="line"></span><br><span class="line">             <span class="keyword">foreach</span> (DataRow row <span class="keyword">in</span> dataTable.Rows)</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="keyword">foreach</span> (DataColumn col <span class="keyword">in</span> dataTable.Columns)</span><br><span class="line">                 &#123;</span><br><span class="line">                     Console.Write(<span class="string">$&quot;<span class="subst">&#123;col.ColumnName&#125;</span>:<span class="subst">&#123;row[col]&#125;</span> &quot;</span>);</span><br><span class="line">                 &#125;</span><br><span class="line">                 Console.WriteLine();</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A51.png" class>
+
+<hr>
+<ul>
+<li><p><font size="4.5"> 透過Dapper來執行複雜的原生SQL語句之案例之案例 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - Nuget: Install-Package Dapper -Version 2.1.35 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 請試驗下列程式碼 </font></p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GroupArticleByPrice</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">double</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Count &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (MyDbContext dbContext = <span class="keyword">new</span> MyDbContext())</span><br><span class="line">&#123;</span><br><span class="line">       <span class="keyword">var</span> articles = dbContext.Database.GetDbConnection()</span><br><span class="line">       .Query&lt;GroupArticleByPrice&gt;(<span class="string">@&quot;select Price, Count(*) as Count from </span></span><br><span class="line"><span class="string">        T_Articles group by Price;&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">foreach</span> (<span class="keyword">var</span> article <span class="keyword">in</span> articles)</span><br><span class="line">       &#123;</span><br><span class="line">           Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;article.Price&#125;</span>,<span class="subst">&#123;article.Count&#125;</span>&quot;</span>);</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 執行結果 </font></li>
+</ul>
+<img src="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/EFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A52.png" class>
+
+<hr>
+<ul>
+<li><p><font size="4.5"> 使用建議: </font></p>
+</li>
+<li><p><font size="4.5"> 大部分情況下，EF Core + LINQ已足夠，若EF Core + LINQ仍然不能滿足需求，而需要撰寫原生SQL語句，則可考慮下列作法 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 原生SQL非查詢語句:使用ExecuteSqlInterpolated()、ExecuteSqlInterpolatedAsync() </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 實體相關的原生SQL查詢語句:使用FromSqlInterpolated() </font></p>
+</li>
+<li><p><font size="4.5"> 3 - 複雜的原生SQL語句:使用ADO.NET或Dapper(推薦用Dapper) </font></p>
+</li>
+</ul>
+
         
     </section>
 </article>
@@ -174,9 +238,9 @@
         admin: ["XavierHuang916070"],
         id: "0d1432524af0447a372f9bf7632402c0",
         distractionFreeMode: true,
-        title: "EFCore之EFCore執行任意的原生SQL語句",
+        title: "EFCore - EFCore執行任意的原生SQL語句",
         body: "https://xavierhuang916070.github.io/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/",
-        labels: []
+        labels: ["efcore"]
     }).render('comments');
     </script>
 </div>
@@ -188,10 +252,8 @@
 
         
             
-            <a id="pagenext" href="/2024/07/05/EFCore%E4%B9%8BIQueryable%E7%9A%84%E5%BB%B6%E9%81%B2%E5%9F%B7%E8%A1%8C/" class="article-next" title="EFCore - IQueryable的延遲執行"><i class="icon-arrow-right"></i></a>
+            <a id="pagenext" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/" class="article-next" title="EFCore - EFCore執行實體相關的原生SQL查詢語句"><i class="icon-arrow-right"></i></a>
             
-            
-            <a id="pageprev" href="/2024/07/08/EFCore%E4%B9%8B%E5%AE%A2%E6%88%B6%E7%AB%AF%E8%A9%95%E4%BC%B0%E7%9A%84%E6%87%89%E7%94%A8/" class="article-prev" title="EFCore - 客戶端評估的應用"><i class="icon-arrow-left"></i></a>
             
         
 
