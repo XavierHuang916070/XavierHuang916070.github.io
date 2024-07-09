@@ -136,52 +136,6 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/2024/06/16/%E5%BF%AB%E5%8F%96%E7%A9%BF%E9%80%8F/">快取穿透</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-06-16T13:25:20.000Z" itemprop="datePublished">2024-06-16</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/aspdotnetcore/" rel="tag">aspdotnetcore</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><font size="4.5"> 快取穿透 </font></li>
-</ul>
-<ul>
-<li><p><font size="4.5"> 快取穿透指的是惡意使用者發出惡意請求以查詢快取與資料庫中的空資料，讓每次惡意請求都去惡意查詢資料庫，給資料庫造成極大的壓力 </font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2024/06/16/%E5%BF%AB%E5%8F%96%E7%A9%BF%E9%80%8F/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
             <a href="/2024/06/15/%E5%BF%AB%E5%8F%96%E4%BC%BA%E6%9C%8D%E5%99%A8/">快取伺服器</a>
         </h1>
         
@@ -588,6 +542,70 @@
         
         <p class="article-more-link">
             <a href="/2024/03/08/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8B%E7%B5%90%E6%A7%8B%E5%8C%96%E6%97%A5%E8%AA%8C%E8%88%87%E9%9B%86%E4%B8%AD%E5%8C%96%E6%97%A5%E8%AA%8C/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/2024/03/04/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8BNLog/">日誌系統 - NLog</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/page/4/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-03-04T11:12:56.000Z" itemprop="datePublished">2024-03-04</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/csharpdotnet/" rel="tag">csharpdotnet</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> 維運人員更偏好文本日誌而非控制台日誌 </font></p>
+</li>
+<li><p><font size="4.5"> 文本日誌一般按照日期區分 </font></p>
+</li>
+<li><p><font size="4.5"> 如何避免文本日誌將Disk塞爆 - 限制日誌總個數或總大小 </font></p>
+</li>
+<li><p><font size="4.5"> 如何避免單個文本日誌太大 - 限制單個日誌的大小 </font></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><font size="4.5"> NLog </font></p>
+</li>
+<li><p><font size="4.5"> 1 - .Net Core並沒有內置的文本日誌提供者，因此必須考慮第三方的文本日誌提供者 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 第三方的文本日誌提供者包含了: Log4Net、NLog、Serilog </font></p>
+</li>
+<li><p><font size="4.5"> 3 - NuGet: NLog.Extensions.Logging </font></p>
+</li>
+<li><p><font size="4.5"> 4 - 在專案根目錄建立nlog.config，必須注意文件名的大小寫(沒注意大小寫則在Linux平台會出問題)，也可以是其他的文件名，但需要單獨配置(此原則稱之為”約定大於配置”，即:能用內置約定就盡量用) </font></p>
+</li>
+<li><p><font size="4.5"> 5 - 註冊服務: services.AddLogging(logBuilder &#x3D;&gt; { logBuilder.AddNLog() }); </font></p></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/03/04/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8BNLog/#more">
                 <span class="vm">閱讀更多</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>

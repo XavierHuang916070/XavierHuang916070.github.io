@@ -136,70 +136,6 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/2024/03/04/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8BNLog/">日誌系統 - NLog</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/page/5/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2024-03-04T11:12:56.000Z" itemprop="datePublished">2024-03-04</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/csharpdotnet/" rel="tag">csharpdotnet</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><p><font size="4.5"> 維運人員更偏好文本日誌而非控制台日誌 </font></p>
-</li>
-<li><p><font size="4.5"> 文本日誌一般按照日期區分 </font></p>
-</li>
-<li><p><font size="4.5"> 如何避免文本日誌將Disk塞爆 - 限制日誌總個數或總大小 </font></p>
-</li>
-<li><p><font size="4.5"> 如何避免單個文本日誌太大 - 限制單個日誌的大小 </font></p>
-</li>
-</ul>
-<hr>
-<ul>
-<li><p><font size="4.5"> NLog </font></p>
-</li>
-<li><p><font size="4.5"> 1 - .Net Core並沒有內置的文本日誌提供者，因此必須考慮第三方的文本日誌提供者 </font></p>
-</li>
-<li><p><font size="4.5"> 2 - 第三方的文本日誌提供者包含了: Log4Net、NLog、Serilog </font></p>
-</li>
-<li><p><font size="4.5"> 3 - NuGet: NLog.Extensions.Logging </font></p>
-</li>
-<li><p><font size="4.5"> 4 - 在專案根目錄建立nlog.config，必須注意文件名的大小寫(沒注意大小寫則在Linux平台會出問題)，也可以是其他的文件名，但需要單獨配置(此原則稱之為”約定大於配置”，即:能用內置約定就盡量用) </font></p>
-</li>
-<li><p><font size="4.5"> 5 - 註冊服務: services.AddLogging(logBuilder &#x3D;&gt; { logBuilder.AddNLog() }); </font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2024/03/04/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8BNLog/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
             <a href="/2024/03/03/%E6%97%A5%E8%AA%8C%E7%B3%BB%E7%B5%B1%E4%B9%8B%E6%A6%82%E5%BF%B5/">日誌系統 - 概念</a>
         </h1>
         
@@ -608,6 +544,53 @@
         
         <p class="article-more-link">
             <a href="/2024/02/11/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%93%B4%E5%B1%95%E6%96%B9%E6%B3%954/#more">
+                <span class="vm">閱讀更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/2024/02/10/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%93%B4%E5%B1%95%E6%96%B9%E6%B3%953/">LINQ基礎 - 常用擴展方法3</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/page/5/index.html">
+    
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-02-10T08:52:12.000Z" itemprop="datePublished">2024-02-10</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/linkquery/" rel="tag">linkquery</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> LINQ基礎之常用擴展方法3 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - OrderBy擴展方法 </font></p>
+</li>
+<li><p><font size="4.5"> (1) 對資料升序排序 </font></p></li></ul>
+        
+        <p class="article-more-link">
+            <a href="/2024/02/10/LINQ%E5%9F%BA%E7%A4%8E%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%93%B4%E5%B1%95%E6%96%B9%E6%B3%953/#more">
                 <span class="vm">閱讀更多</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
