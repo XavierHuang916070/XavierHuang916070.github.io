@@ -7,7 +7,7 @@
 
     
 
-    <title>Archives: 2024/7 | Xavier的技術博客</title>
+    <title>EFCore之EFCore底層原理 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
     <meta name="description" content="" />
@@ -72,7 +72,7 @@
                 <span class="nav-text">EntityFramework Core</span>
             </a>
         
-            <a class="nav-item active" href="/archives">
+            <a class="nav-item" href="/archives">
                 <span class="nav-text">歸檔</span>
             </a>
         
@@ -88,6 +88,8 @@
     <div id="aside-inner" class="aside-inner">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="https://xavierhuang916070.github.io"></form>
 
+        
+        
         
         
 
@@ -130,243 +132,67 @@
 
         <div id="content" class="content">
             <div id="wrapper" class="wrapper" style="max-width: 800px">
-                
-
-
+                <article class="article" itemscope itemprop="blogPost">
     
-    
-    
-    
-    
-    <section class="archives-wrap">
-    <div class="archive-year-wrap">
-    <a href="/archives/2024/07" class="page-hd">
-        2024/07
-    </a>
-    </div>
-    <ol class="archives">
-    
-
-    <li class="archive-section-item">
+    <header class="article-header">
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/09/EFCore%E4%B9%8B%E9%80%8F%E9%81%8E%E7%A8%8B%E5%BC%8F%E7%A2%BC%E6%9F%A5%E7%9C%8BEFCore%E7%94%9F%E6%88%90%E7%9A%84SQL/">EFCore之透過程式碼查看EFCore生成的SQL</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-09T04:27:56.000Z" itemprop="datePublished">7/9</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
+        <h1 itemprop="name">
+            EFCore之EFCore底層原理
+        </h1>
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/09/EFCore%E4%B9%8B%E7%9B%B8%E5%90%8C%E7%9A%84LINQ%E8%A2%AB%E7%BF%BB%E8%AD%AF%E7%82%BA%E4%B8%8D%E5%90%8C%E7%9A%84SQL%E8%AA%9E%E5%8F%A5/">EFCore之相同的LINQ被翻譯為不同的SQL語句</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2024/07/09/EFCore%E4%B9%8BEFCore%E5%BA%95%E5%B1%A4%E5%8E%9F%E7%90%86/index.html">
     
-    <time class="vm" datetime="2024-07-09T04:27:28.000Z" itemprop="datePublished">7/9</time>
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2024-07-09T04:26:21.000Z" itemprop="datePublished">2024-07-09</time>
 </a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
 
-    
-    
+            
 
-    <li class="archive-section-item">
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/09/EFCore%E4%B9%8BEFCore%E5%8F%8D%E5%90%91%E5%B7%A5%E7%A8%8B/">EFCore之EFCore反向工程</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-09T04:26:50.000Z" itemprop="datePublished">7/9</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/09/EFCore%E4%B9%8BEFCore%E5%BA%95%E5%B1%A4%E5%8E%9F%E7%90%86/">EFCore之EFCore底層原理</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-09T04:26:21.000Z" itemprop="datePublished">7/9</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/">EFCore - EFCore優化之AsNoTracking</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-08T15:25:38.000Z" itemprop="datePublished">7/8</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
+    </section>
 </article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
-        
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93%E5%AF%A6%E9%AB%94%E6%95%B8%E6%93%9A%E8%AE%8A%E4%BA%86/">EFCore - EFCore如何知道實體資料變了</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-08T14:52:10.000Z" itemprop="datePublished">7/8</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
-        
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E4%BB%BB%E6%84%8F%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行任意的原生SQL語句</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-08T14:38:50.000Z" itemprop="datePublished">7/8</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
-        
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%AF%A6%E9%AB%94%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8E%9F%E7%94%9FSQL%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行實體相關的原生SQL查詢語句</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-08T14:10:43.000Z" itemprop="datePublished">7/8</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
-        
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/08/EFCore%E4%B9%8BEFCore%E5%9F%B7%E8%A1%8C%E5%8E%9F%E7%94%9FSQL%E9%9D%9E%E6%9F%A5%E8%A9%A2%E8%AA%9E%E5%8F%A5/">EFCore - EFCore執行原生SQL非查詢語句</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-08T13:55:58.000Z" itemprop="datePublished">7/8</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-    
-    
-
-    <li class="archive-section-item">
-        
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/07/08/EFCore%E4%B9%8BIQueryable%E7%9A%84%E8%A4%87%E7%94%A8/">EFCore - IQueryable的複用</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/07">
-    
-    <time class="vm" datetime="2024-07-08T10:51:12.000Z" itemprop="datePublished">7/8</time>
-</a>
-)
-            </span>
-        </header>
-    </div>
-</article>
-    </li>
-
-
-</ol></section>
 
 
 
-<nav class="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2024/07/page/2/">2</a><a class="extend next" rel="next" href="/archives/2024/07/page/2/">Next &raquo;</a>
-</nav>
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "e4595268775ea0e0f9be",
+        clientSecret: "d99617dde26729e9efaea586c23e0b1a702faec7",
+        repo: "XavierHuang916070.github.io",
+        owner: "XavierHuang916070",
+        admin: ["XavierHuang916070"],
+        id: "b00d33e62b41a1910bb8f544f36ea24d",
+        distractionFreeMode: true,
+        title: "EFCore之EFCore底層原理",
+        body: "https://xavierhuang916070.github.io/2024/07/09/EFCore%E4%B9%8BEFCore%E5%BA%95%E5%B1%A4%E5%8E%9F%E7%90%86/",
+        labels: []
+    }).render('comments');
+    </script>
+</div>
+
 
 
             </div>
         </div>
 
+        
+            
+            <a id="pagenext" href="/2024/07/08/EFCore%E5%84%AA%E5%8C%96%E4%B9%8BAsNoTracking/" class="article-next" title="EFCore - EFCore優化之AsNoTracking"><i class="icon-arrow-right"></i></a>
+            
+            
+            <a id="pageprev" href="/2024/07/09/EFCore%E4%B9%8BEFCore%E5%8F%8D%E5%90%91%E5%B7%A5%E7%A8%8B/" class="article-prev" title="EFCore之EFCore反向工程"><i class="icon-arrow-left"></i></a>
+            
         
 
         <footer class="footer">
@@ -430,6 +256,33 @@
         });
     });
     </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
     
 
 </body>

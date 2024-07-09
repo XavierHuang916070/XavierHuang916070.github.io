@@ -7,10 +7,10 @@
 
     
 
-    <title>Category: efcore | Xavier的技術博客</title>
+    <title>EFCore - EFCore有哪些做不到的事 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" EF Core有哪些做不到的事  C#千變萬化，SQL相對容易，因此存在了C#語句無法被翻譯為SQL語句的情況，下面我們來觀察各種使用了EF Core的C#語句之翻譯情況   1 - 可被翻譯為SQL語句 1dbContext.Persons.Where(p =&amp;gt; p.Name.Contains(&amp;quot;黃&amp;quot;)); 經由SQL Server Profiler觀察翻譯結果 123SELECT [p].[Id], [p].[Birthday], [p].[Name]FROM [" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -68,7 +68,7 @@
                 <span class="nav-text">Linq</span>
             </a>
         
-            <a class="nav-item active" href="/categories/efcore">
+            <a class="nav-item" href="/categories/efcore">
                 <span class="nav-text">EntityFramework Core</span>
             </a>
         
@@ -88,6 +88,8 @@
     <div id="aside-inner" class="aside-inner">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="https://xavierhuang916070.github.io"></form>
 
+        
+        
         
         
 
@@ -130,60 +132,16 @@
 
         <div id="content" class="content">
             <div id="wrapper" class="wrapper" style="max-width: 800px">
-                
-    <article class="article" itemscope itemprop="blogPost">
+                <article class="article" itemscope itemprop="blogPost">
     
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/">EF Core - 有關批次插入、刪除、更新資料</a>
+            EFCore - EFCore有哪些做不到的事
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/categories/efcore/page/2/index.html">
-    
-    <i class="icon-calendar vm"></i>
-    
-    <time class="vm" datetime="2023-06-22T11:54:54.000Z" itemprop="datePublished">2023-06-22</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag vm"></i>
-    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <ul>
-<li><p><font size="4.5">EF Core 7之前的版本，批次刪除、更新資料的方法是使用RemoveRange()、UpdateRange()，本質上是先查出多條記錄後，再對逐條記錄個別進行Delete、Update，對於大量資料而言，效率非常低</font></p></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2023/06/04/EFCore%E4%B9%8BEFCore%E6%9C%89%E5%93%AA%E4%BA%9B%E5%81%9A%E4%B8%8D%E5%88%B0%E7%9A%84%E4%BA%8B/">EFCore - EFCore有哪些做不到的事</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="https://xavierhuang916070.github.io/categories/efcore/page/2/index.html">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2023/06/04/EFCore%E4%B9%8BEFCore%E6%9C%89%E5%93%AA%E4%BA%9B%E5%81%9A%E4%B8%8D%E5%88%B0%E7%9A%84%E4%BA%8B/index.html">
     
     <i class="icon-calendar vm"></i>
     
@@ -204,31 +162,77 @@
         
         <ul>
 <li><font size="4.5"> EF Core有哪些做不到的事 </font></li>
-<li><font size="4.5"> C#千變萬化，SQL相對容易，因此存在了C#語句無法被翻譯為SQL語句的情況，下面我們來觀察各種使用了EF Core的C#語句之翻譯情況 </font></li></ul>
-        
-        <p class="article-more-link">
-            <a href="/2023/06/04/EFCore%E4%B9%8BEFCore%E6%9C%89%E5%93%AA%E4%BA%9B%E5%81%9A%E4%B8%8D%E5%88%B0%E7%9A%84%E4%BA%8B/#more">
-                <span class="vm">閱讀更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
+<li><font size="4.5"> C#千變萬化，SQL相對容易，因此存在了C#語句無法被翻譯為SQL語句的情況，下面我們來觀察各種使用了EF Core的C#語句之翻譯情況 </font> <span id="more"></span></li>
+<li><font size="4.5"> 1 - 可被翻譯為SQL語句 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbContext.Persons.Where(p =&gt; p.Name.Contains(<span class="string">&quot;黃&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 經由SQL Server Profiler觀察翻譯結果 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT [p].[Id], [p].[Birthday], [p].[Name]</span><br><span class="line">FROM [Persons] AS [p]</span><br><span class="line">WHERE [p].[Name] LIKE N<span class="string">&#x27;%黃</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 2 - 不可被翻譯為SQL語句 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dbContext.Persons.Where(p =&gt; IsOk(p.Name);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="built_in">bool</span> <span class="title">IsOk</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> str.contains(<span class="string">&quot;黃&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 3 - 不可被翻譯為SQL語句 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbContext.Persons .Where(p =&gt; p.Name.PadLeft(<span class="number">5</span>,<span class="string">&#x27;0&#x27;</span>) == <span class="string">&quot;黃阿瑋&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li><font size="4.5"> 一條使用了EF Core的C#語句會根據不同資料庫系統被翻譯成不同的SQL語句，主要是因為各資料庫系統的EF Core Provider不同，例如: </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbContext.Persons.Where(p =&gt; p.Name.ToLower() == <span class="string">&quot;黃阿瑋&quot;</span> </span><br><span class="line">&amp;&amp; p.Birthday == DateTime.Now);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 經由SQL Server Profiler觀察翻譯結果 </font></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT [p].[Id], [p].[Birthday], [p].[Name]</span><br><span class="line">FROM [Persons] AS [p]</span><br><span class="line"><span class="function">WHERE <span class="title">LOWER</span>(<span class="params">[p].[Name]</span>)</span> = N<span class="string">&#x27;黃阿瑋&#x27;</span> AND [p].[Birthday] = GETDATE()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font size="4.5"> 上述C#語句會被SQL Server EF Core Provider成功翻譯為SQL 語句，但若被其他資料庫系統的EF Core Provider成功翻譯為SQL語句，則其SQL語句可能不會完全相同(可能是具有細微差別的不同SQL語句)，甚至可能無法成功翻譯 </font></li>
+</ul>
+<img src="/2023/06/04/EFCore%E4%B9%8BEFCore%E6%9C%89%E5%93%AA%E4%BA%9B%E5%81%9A%E4%B8%8D%E5%88%B0%E7%9A%84%E4%BA%8B/EFCore%E6%9C%89%E5%93%AA%E4%BA%9B%E5%81%9A%E4%B8%8D%E5%88%B0%E7%9A%84%E4%BA%8B1.png" class>
+
         
     </section>
 </article>
 
 
 
-
-<nav class="page-nav">
-    <a class="extend prev" rel="prev" href="/categories/efcore/">&laquo; Prev</a><a class="page-number" href="/categories/efcore/">1</a><span class="page-number current">2</span>
-</nav>
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "e4595268775ea0e0f9be",
+        clientSecret: "d99617dde26729e9efaea586c23e0b1a702faec7",
+        repo: "XavierHuang916070.github.io",
+        owner: "XavierHuang916070",
+        admin: ["XavierHuang916070"],
+        id: "b839fe79c29562e738e0e7bdd7e64d7a",
+        distractionFreeMode: true,
+        title: "EFCore - EFCore有哪些做不到的事",
+        body: "https://xavierhuang916070.github.io/2023/06/04/EFCore%E4%B9%8BEFCore%E6%9C%89%E5%93%AA%E4%BA%9B%E5%81%9A%E4%B8%8D%E5%88%B0%E7%9A%84%E4%BA%8B/",
+        labels: ["efcore"]
+    }).render('comments');
+    </script>
+</div>
 
 
 
             </div>
         </div>
 
+        
+            
+            
+            <a id="pageprev" href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/" class="article-prev" title="EF Core - 有關批次插入、刪除、更新資料"><i class="icon-arrow-left"></i></a>
+            
         
 
         <footer class="footer">
@@ -292,6 +296,33 @@
         });
     });
     </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
     
 
 </body>
