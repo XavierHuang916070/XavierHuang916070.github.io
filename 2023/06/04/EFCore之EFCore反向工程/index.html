@@ -7,10 +7,10 @@
 
     
 
-    <title>Archives: 2024 | Xavier的技術博客</title>
+    <title>EFCore - EFCore的反向工程 | Xavier的技術博客</title>
     <meta name="author" content="Xavier Huang" />
     <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="description" content=" DB First - 先將資料庫、資料表建立好，再反向生成實體類(不適合開發複雜的大型專案、新專案，通常只在維運舊系統時會使用到)  Model First - 先將圖形化模型建立好，再反向生成實體類，再生成資料庫、資料表(不適合開發複雜的大型專案、新專案，目前已淘汰)  Code First - 先將實體類建立好，再生成資料庫、資料表(適合開發複雜的大型專案)   EF Core的反向工程  1 - 可用來實現類似於DB First的運作，根據已建立好的資料庫、資料表來反向生成實體類  2 " />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -72,7 +72,7 @@
                 <span class="nav-text">EntityFramework Core</span>
             </a>
         
-            <a class="nav-item active" href="/archives">
+            <a class="nav-item" href="/archives">
                 <span class="nav-text">歸檔</span>
             </a>
         
@@ -88,6 +88,8 @@
     <div id="aside-inner" class="aside-inner">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="https://xavierhuang916070.github.io"></form>
 
+        
+        
         
         
 
@@ -130,54 +132,104 @@
 
         <div id="content" class="content">
             <div id="wrapper" class="wrapper" style="max-width: 800px">
-                
-
-
+                <article class="article" itemscope itemprop="blogPost">
     
-    
-    
-    
-    
-    <section class="archives-wrap">
-    <div class="archive-year-wrap">
-    <a href="/archives/2024" class="page-hd">
-        2024
-    </a>
-    </div>
-    <ol class="archives">
-    
-
-    <li class="archive-section-item">
+    <header class="article-header">
         
-<article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <header class="archive-article-header">
-            <a class="archive-article-link" href="/2024/02/04/csharp%E6%96%B0%E8%AA%9E%E6%B3%95/">csharp新語法 - 頂級語句、全域using</a>
-            <span class="archive-article-date">
-                (<a class="article-date" href="/archives/2024/02">
+        <h1 itemprop="name">
+            EFCore - EFCore的反向工程
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="https://xavierhuang916070.github.io/2023/06/04/EFCore%E4%B9%8BEFCore%E5%8F%8D%E5%90%91%E5%B7%A5%E7%A8%8B/index.html">
     
-    <time class="vm" datetime="2024-02-04T01:25:20.000Z" itemprop="datePublished">2/4</time>
+    <i class="icon-calendar vm"></i>
+    
+    <time class="vm" datetime="2023-06-04T11:52:03.000Z" itemprop="datePublished">2023-06-04</time>
 </a>
-)
-            </span>
-        </header>
-    </div>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag vm"></i>
+    <a class="article-tag-link" href="/tags/efcore/" rel="tag">efcore</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <ul>
+<li><p><font size="4.5"> DB First - 先將資料庫、資料表建立好，再反向生成實體類(不適合開發複雜的大型專案、新專案，通常只在維運舊系統時會使用到) </font></p>
+</li>
+<li><p><font size="4.5"> Model First - 先將圖形化模型建立好，再反向生成實體類，再生成資料庫、資料表(不適合開發複雜的大型專案、新專案，目前已淘汰) </font></p>
+</li>
+<li><p><font size="4.5"> Code First - 先將實體類建立好，再生成資料庫、資料表(適合開發複雜的大型專案) </font> <span id="more"></span></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><font size="4.5"> EF Core的反向工程 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 可用來實現類似於DB First的運作，根據已建立好的資料庫、資料表來反向生成實體類 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 不適合開發複雜的大型專案、新專案，通常只在維運舊系統時會使用到，因為舊系統通常已存在大量的資料庫、資料表，透過反向工程可快速生成對應到的所有實體類 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - </font></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scaffold-DbContext &#x27;Server=localhost;Database=TestDb;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true;&#x27; Microsoft.EntityFrameworkCore.SqlServer</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li><p><font size="4.5"> 反向工程的注意事項 </font></p>
+</li>
+<li><p><font size="4.5"> 1 - 生成的實體類可能不能完全滿足專案的要求，可能會需要進行手動修改或再增加配置 </font></p>
+</li>
+<li><p><font size="4.5"> 2 - 再次運行反向工程指令，對文件所做的任何修改都可能會丟失 </font></p>
+</li>
+<li><p><font size="4.5"> 3 - 不建議將反向工程作為日常開發工具使用，會遇到非常多的問題 </font></p>
+</li>
+</ul>
+
+        
+    </section>
 </article>
-    </li>
-
-
-</ol></section>
 
 
 
-<nav class="page-nav">
-    <a class="extend prev" rel="prev" href="/archives/2024/page/6/">&laquo; Prev</a><a class="page-number" href="/archives/2024/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2024/page/5/">5</a><a class="page-number" href="/archives/2024/page/6/">6</a><span class="page-number current">7</span>
-</nav>
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "e4595268775ea0e0f9be",
+        clientSecret: "d99617dde26729e9efaea586c23e0b1a702faec7",
+        repo: "XavierHuang916070.github.io",
+        owner: "XavierHuang916070",
+        admin: ["XavierHuang916070"],
+        id: "8888ededc7d40cd18fe77d406ade6eda",
+        distractionFreeMode: true,
+        title: "EFCore - EFCore的反向工程",
+        body: "https://xavierhuang916070.github.io/2023/06/04/EFCore%E4%B9%8BEFCore%E5%8F%8D%E5%90%91%E5%B7%A5%E7%A8%8B/",
+        labels: ["efcore"]
+    }).render('comments');
+    </script>
+</div>
+
 
 
             </div>
         </div>
 
+        
+            
+            <a id="pagenext" href="/2023/06/04/EFCore%E4%B9%8BEFCore%E5%BA%95%E5%B1%A4%E5%8E%9F%E7%90%86/" class="article-next" title="EFCore - EFCore的底層原理"><i class="icon-arrow-right"></i></a>
+            
+            
+            <a id="pageprev" href="/2023/06/22/EFCore%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E9%80%B2%E8%A1%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E3%80%81%E5%88%AA%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99/" class="article-prev" title="EF Core - 有關批次插入、刪除、更新資料"><i class="icon-arrow-left"></i></a>
+            
         
 
         <footer class="footer">
@@ -241,6 +293,33 @@
         });
     });
     </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
     
 
 </body>
